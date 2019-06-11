@@ -44,16 +44,43 @@ def checkErrors(a):
                 print("Error in inverse(a): Matrix is missing values")
 
 
+#returns [a,identity] updated
+def upperT(a,identity):
+    for j in range(len(a[0])):
+        for i in range(len(a)):
+            if(i>j):
+                a[i][j] = "a"
+    return [a,identity]
+    
+
+#returns [a,identity] updated
+def diag(a,identity):
+    for i in range(len(a)):
+        for j in range(len(a[0])):
+            if(i==j):
+                a[i][j] = "b"
+    return [a,identity]
+    
+
+#returns [a,identity] updated
+def lowerT(a,identity):
+    for i in range(len(a)):
+        for j in range(len(a[0])):
+            if(i<j):
+                a[i][j] = "c"
+    return [a,identity]
+
+
 #a[[]] = matrix to invert
 def inverse(a):
-    #Check for errors:
+    #Step 1: Check for errors:
     checkErrors(a)
             
-    #Step 1: Print the Matrix + Identity Matrix
+    #Step 2: Print the Matrix + Identity Matrix
     print("\nYour Matrix looks like:\n")
     printMatrix(a)
         
-    #Step 2: Create Identity Matrix
+    #Step 3: Create Identity Matrix
     identity = []
     for x in range(len(a)):
         element = []
@@ -66,21 +93,22 @@ def inverse(a):
     print("Identity Matrix looks like:\n")
     printMatrix(identity)
     
-    #Step 3: Do the operations
-    for i in range(len(a)):
-        for j in range(len(a[0])):
-            if(i==j):
-                #Make this cell 1
-                t = 1
-            else:
-                #Make this cell 0
-                t = 1
+    #Step 4: Do the operations 
+    augment = upperT(a,identity)
+    a = augment[0]
+    identity = augment[1]
+    augment = diag(a,identity)
+    a = augment[0]
+    identity = augment[1]
+    augment = lowerT(a,identity)
+    a = augment[0]
+    identity = augment[1]
     
-    #Step 4: Print both matricies
+    #Step 5: Print both matricies
     print("\n\nAfter operations, your matrix looks like:\n")
     printMatrix(a)
     print("The Identity matrix now looks like:\n")
     printMatrix(identity)
     
-    #Step 5: Return the updated Identity Matrix
+    #Step 6: Return the updated Identity Matrix
     return identity
