@@ -25,6 +25,7 @@ def printMatrix(a):
             string += str(y)+" "
         string += "|"
         print(string)
+    print("")
     
     
 #makes sure a[[]] is correct format
@@ -62,22 +63,24 @@ def inverse(a):
             else:
                 element.append(0)
         identity.append(element)
-    print("\nIdentity Matrix looks like:\n")
+    print("Identity Matrix looks like:\n")
     printMatrix(identity)
     
     #Step 3: Do the operations
     for i in range(len(a)):
         for j in range(len(a[0])):
             if(i==j):
-                #1
+                #Make this cell 1
+                t = 1
             else:
-                #0
+                #Make this cell 0
+                t = 1
     
     #Step 4: Print both matricies
-    print("\nYour new matrix looks like:\n")
+    print("\n\nAfter operations, your matrix looks like:\n")
     printMatrix(a)
-    print("\nThe Identity matrix now looks like:\n")
-    printMatrix(b)
+    print("The Identity matrix now looks like:\n")
+    printMatrix(identity)
     
     #Step 5: Return the updated Identity Matrix
     return identity
