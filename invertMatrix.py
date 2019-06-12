@@ -63,23 +63,16 @@ def checkErrors(a):
 
 #returns [a,identity] updated
 def upperT(a,identity):
-    for j in range(len(a[0])):
-        for i in range(len(a)):
-            if(i>j):
-                if(a[i][j] != 0):   
-                    #check other rows
-                    fail = True
-                    for x in range(len(a)):
-                        if(a[x][j] != 0 and x != i):
-                            fail = False
-                            arrayA = multiply((-1.0/(a[x][j])),a[x])
-                            a[i] = add(a[i],arrayA)
-                            arrayIdentity = multiply((-1.0/(a[x][j])),identity[x])
-                            identity[i] = add(identity[i],arrayIdentity)
-                            break
-                    if(fail):
-                        print("Error in upperT(): Everything in the column is 0")
-                        return None
+    """Plan:
+        1. Find an element within the upper triangle
+        2. If the element is 0, do nothing
+        3. If the element is 1-9:
+            find the diagonal element in the same column
+            if the element is negative, multiply the diagonal-element row by (1.0 * element)
+            if the element is positive, multiply the diagonal-element row by (-1.0 * element)
+            add the diagonal-element row into the element row
+    """
+    
     return [a,identity]
 
 
@@ -118,6 +111,15 @@ def diag(a,identity):
 
 #returns [a,identity] updated
 def lowerT(a,identity):
+        """Plan:
+        1. Find an element within the lower triangle
+        2. If the element is 0, do nothing
+        3. If the element is 1-9:
+            find the diagonal element in the same column
+            if the element is negative, multiply the diagonal-element row by (1.0 * element)
+            if the element is positive, multiply the diagonal-element row by (-1.0 * element)
+            add the diagonal-element row into the element row
+    """
     for i in range(len(a)):
         for j in range(len(a[0])):
             if(i<j):
@@ -149,9 +151,9 @@ def inverse(a):
     augment = diag(a,identity)
     a = augment[0]
     identity = augment[1]
-    """augment = upperT(a,identity)
+    augment = upperT(a,identity)
     a = augment[0]
-    identity = augment[1]"""
+    identity = augment[1]
     augment = lowerT(a,identity)
     a = augment[0]
     identity = augment[1]
