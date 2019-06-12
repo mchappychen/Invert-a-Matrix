@@ -68,11 +68,24 @@ def upperT(a,identity):
         2. If the element is 0, do nothing
         3. If the element is 1-9:
             find the diagonal element in the same column
-            if the element is negative, multiply the diagonal-element row by (1.0 * element)
+            if the element is negative, multiply the diagonal-element row by (element)
             if the element is positive, multiply the diagonal-element row by (-1.0 * element)
             add the diagonal-element row into the element row
     """
-    
+    for i in range(len(a)):
+        for j in range(len(a[0])):
+            if(i<j and a[i][j] != 0):
+                rowDiagonal = a[j]
+                if(a[i][j] > 0):
+                    rowDiagonal = multiply(a[i][j],rowDiagonal)
+                    rowIdentity = multiply(a[i][j],identity[j])
+                    a[i] = add(a[i],rowDiagonal)
+                    identity[i] = add(a[i],rowIdentity)
+                else:
+                    rowDiagonal = multiply(a[i][j] * -1, rowDiagonal)
+                    rowIdentity = multiply(a[i][j] * -1, identity[j])
+                    a[i] = add(a[i],rowDiagonal)
+                    identity[i] = add(a[i],rowIdentity)
     return [a,identity]
 
 
@@ -111,7 +124,7 @@ def diag(a,identity):
 
 #returns [a,identity] updated
 def lowerT(a,identity):
-        """Plan:
+    """Plan:
         1. Find an element within the lower triangle
         2. If the element is 0, do nothing
         3. If the element is 1-9:
@@ -122,8 +135,9 @@ def lowerT(a,identity):
     """
     for i in range(len(a)):
         for j in range(len(a[0])):
-            if(i<j):
+            if(i>j):
                 a[i][j] = -1
+            
     return [a,identity]
 
 
@@ -147,20 +161,27 @@ def inverse(a):
     print("\nAugmented Matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
-    #Step 4: Do the operations 
+    #Step 4: Convert diagonal into 1
     augment = diag(a,identity)
     a = augment[0]
     identity = augment[1]
+    print("\nAfter diag(), augmented matrix looks like:\n")
+    printAugmentedMatrix(a,identity)
+    
+    #Step 5: Convert upper triangle into 0
     augment = upperT(a,identity)
     a = augment[0]
     identity = augment[1]
+    print("\nAfter upperT(), augmented matrix looks like:\n")
+    printAugmentedMatrix(a,identity)
+    
+    #Step 6: Convert lower triangle into 0
     augment = lowerT(a,identity)
     a = augment[0]
     identity = augment[1]
-    
-    #Step 5: Print both matricies
-    print("\n\nAfter operations, your augmented matrix looks like:\n")
+    print("\nAfter lowerT(), augmented matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
-    #Step 6: Return the updated Identity Matrix
+    
+    #Step 7: Return the updated Identity Matrix
     return identity
