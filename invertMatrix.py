@@ -1,5 +1,8 @@
 #returns: b[] x a
 def multiply(a,b):
+    if(a == 0):
+        print("Error in multiply(): You can't multiply matrix by 0")
+        return None
     result = []
     for i in range(len(b)):
         result.append(b[i] * a)
@@ -12,7 +15,7 @@ def add(a,b):
     if(len(a) != len(b)):
         print("Error in add(a,b): length of a[] not equal to length of b[]")
         return None
-    for i in range(a):
+    for i in range(len(a)):
         result.append(a[i]+b[i])
     return result
 
@@ -20,14 +23,28 @@ def add(a,b):
 #prints a[[]]
 def printMatrix(a):
     for x in a:
-        string = "| "
+        string = "|\t"
         for y in x:
-            string += str(y)+" "
+            string += str(y)+"\t"
         string += "|"
         print(string)
     print("")
     
-    
+
+#prings a[[]] | b[[]]
+def printAugmentedMatrix(a,b):
+    for x in range(len(a)):
+        string = "|\t"
+        for y in range(len(a[0])):
+            string += str(a[x][y]) + "\t"
+        string += "|\t"
+        for y in range(len(b[0])):
+            string += str(b[x][y]) + "\t"
+        string += "|"
+        print(string)
+    print("")
+
+
 #makes sure a[[]] is correct format
 def checkErrors(a):
     try:
@@ -49,7 +66,21 @@ def upperT(a,identity):
     for j in range(len(a[0])):
         for i in range(len(a)):
             if(i>j):
-                a[i][j] = "a"
+                if(a[i][j] != 0):   
+                    #check other rows
+                    fail = True
+                    for x in range(len(a)):
+                        print("x: ",x,"i: ",i)
+                        if(a[x][j] != 0 and x != i):
+                            fail = False
+                            arrayA = multiply((-1.0/(a[x][j])),a[i])
+                            a[i] = add(a[i],arrayA)
+                            arrayIdentity = multiply((-1.0/(a[x][j])),identity[i])
+                            identity[i] = add(identity[i],arrayIdentity)
+                            break
+                    if(fail):
+                        print("Error in upperT(): Everything in the column is 0")
+                        return None
     return [a,identity]
     
 
@@ -58,7 +89,8 @@ def diag(a,identity):
     for i in range(len(a)):
         for j in range(len(a[0])):
             if(i==j):
-                a[i][j] = "b"
+                if(a[i][j] != 1):
+                    pass
     return [a,identity]
     
 
@@ -75,12 +107,8 @@ def lowerT(a,identity):
 def inverse(a):
     #Step 1: Check for errors:
     checkErrors(a)
-            
-    #Step 2: Print the Matrix + Identity Matrix
-    print("\nYour Matrix looks like:\n")
-    printMatrix(a)
         
-    #Step 3: Create Identity Matrix
+    #Step 2: Create Identity Matrix
     identity = []
     for x in range(len(a)):
         element = []
@@ -90,14 +118,16 @@ def inverse(a):
             else:
                 element.append(0)
         identity.append(element)
-    print("Identity Matrix looks like:\n")
-    printMatrix(identity)
+
+    #Step 3: Print augmented matrix
+    print("\nAugmented Matrix looks like:\n")
+    printAugmentedMatrix(a,identity)
     
     #Step 4: Do the operations 
-    augment = upperT(a,identity)
+    augment = diag(a,identity)
     a = augment[0]
     identity = augment[1]
-    augment = diag(a,identity)
+    augment = upperT(a,identity)
     a = augment[0]
     identity = augment[1]
     augment = lowerT(a,identity)
@@ -105,10 +135,8 @@ def inverse(a):
     identity = augment[1]
     
     #Step 5: Print both matricies
-    print("\n\nAfter operations, your matrix looks like:\n")
-    printMatrix(a)
-    print("The Identity matrix now looks like:\n")
-    printMatrix(identity)
+    print("\n\nAfter operations, your augmented matrix looks like:\n")
+    printAugmentedMatrix(a,identity)
     
     #Step 6: Return the updated Identity Matrix
     return identity
