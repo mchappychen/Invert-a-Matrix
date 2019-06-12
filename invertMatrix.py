@@ -36,10 +36,10 @@ def printAugmentedMatrix(a,b):
     for x in range(len(a)):
         string = "|\t"
         for y in range(len(a[0])):
-            string += str(a[x][y]) + "\t"
+            string += str(round(a[x][y],2)) + "\t"
         string += "|\t"
         for y in range(len(b[0])):
-            string += str(b[x][y]) + "\t"
+            string += str(round(b[x][y],2)) + "\t"
         string += "|"
         print(string)
     print("")
@@ -70,27 +70,49 @@ def upperT(a,identity):
                     #check other rows
                     fail = True
                     for x in range(len(a)):
-                        print("x: ",x,"i: ",i)
                         if(a[x][j] != 0 and x != i):
                             fail = False
-                            arrayA = multiply((-1.0/(a[x][j])),a[i])
+                            arrayA = multiply((-1.0/(a[x][j])),a[x])
                             a[i] = add(a[i],arrayA)
-                            arrayIdentity = multiply((-1.0/(a[x][j])),identity[i])
+                            arrayIdentity = multiply((-1.0/(a[x][j])),identity[x])
                             identity[i] = add(identity[i],arrayIdentity)
                             break
                     if(fail):
                         print("Error in upperT(): Everything in the column is 0")
                         return None
     return [a,identity]
-    
+
 
 #returns [a,identity] updated
 def diag(a,identity):
+    """Plan:
+        1. Find a diagonal element
+        2. If the diagonal element is 1, do nothing
+        3. If the diagonal element is 2-9, multiply the row by 1.0/element
+        4. If the diagonal element is 0:
+            find another row that is 1-9, multiply it by 1.0/element, add it to the row
+    """
     for i in range(len(a)):
         for j in range(len(a[0])):
-            if(i==j):
-                if(a[i][j] != 1):
-                    pass
+            if(i==j and a[i][j] != 1):
+                if(a[i][j] != 0):
+                    arrayA = multiply(1.0/a[i][j],a[i])
+                    a[i] = arrayA
+                    arrayIdentity = multiply(1.0/a[i][j],identity[i])
+                    identity[i] = arrayIdentity
+                else:
+                    fail = True
+                    for x in range(len(a)):
+                        if(a[x][j] != 0 and x != i):
+                            fail = False
+                            arrayA = multiply((1.0/(a[x][j])),a[x])
+                            a[i] = add(a[i],arrayA)
+                            arrayIdentity = multiply((1.0/(a[x][j])),identity[x])
+                            identity[i] = add(identity[i],arrayIdentity)
+                            break
+                    if(fail):
+                        print("Error in diag(): Everything column "+str(j)+" is 0")
+                            
     return [a,identity]
     
 
@@ -99,7 +121,7 @@ def lowerT(a,identity):
     for i in range(len(a)):
         for j in range(len(a[0])):
             if(i<j):
-                a[i][j] = "c"
+                a[i][j] = -1
     return [a,identity]
 
 
@@ -127,9 +149,9 @@ def inverse(a):
     augment = diag(a,identity)
     a = augment[0]
     identity = augment[1]
-    augment = upperT(a,identity)
+    """augment = upperT(a,identity)
     a = augment[0]
-    identity = augment[1]
+    identity = augment[1]"""
     augment = lowerT(a,identity)
     a = augment[0]
     identity = augment[1]
