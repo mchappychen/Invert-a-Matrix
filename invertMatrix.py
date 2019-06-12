@@ -1,3 +1,10 @@
+"""
+    Author: Michael
+    1. Run the program
+    2. Type inverse( [ [a,b],[c,d] ] )
+        where abcd are numbers
+    inverse() takes in a single sqaure matrix
+"""
 #returns: b[] x a
 def multiply(a,b):
     if(a == 0):
@@ -64,85 +71,29 @@ def checkErrors(a):
 #returns [a,identity] updated
 def upperT(a,identity):
     """Plan:
-        1. Find an element within the upper triangle
-        2. If the element is 0, do nothing
-        3. If the element is 1-9:
-            find the diagonal element in the same column
-            if the element is negative, multiply the diagonal-element row by (element)
-            if the element is positive, multiply the diagonal-element row by (-1.0 * element)
-            add the diagonal-element row into the element row
+        
     """
-    for i in range(len(a)):
-        for j in range(len(a[0])):
-            if(i<j and a[i][j] != 0):
-                rowDiagonal = a[j]
-                if(a[i][j] > 0):
-                    rowDiagonal = multiply(a[i][j],rowDiagonal)
-                    rowIdentity = multiply(a[i][j],identity[j])
-                    a[i] = add(a[i],rowDiagonal)
-                    identity[i] = add(a[i],rowIdentity)
-                else:
-                    rowDiagonal = multiply(a[i][j] * -1, rowDiagonal)
-                    rowIdentity = multiply(a[i][j] * -1, identity[j])
-                    a[i] = add(a[i],rowDiagonal)
-                    identity[i] = add(a[i],rowIdentity)
     return [a,identity]
 
 
 #returns [a,identity] updated
 def diag(a,identity):
     """Plan:
-        1. Find a diagonal element
-        2. If the diagonal element is 1, do nothing
-        3. If the diagonal element is 2-9, multiply the row by 1.0/element
-        4. If the diagonal element is 0:
-            find another row that is 1-9, multiply it by 1.0/element, add it to the row
-    """
-    for i in range(len(a)):
-        for j in range(len(a[0])):
-            if(i==j and a[i][j] != 1):
-                if(a[i][j] != 0):
-                    arrayA = multiply(1.0/a[i][j],a[i])
-                    a[i] = arrayA
-                    arrayIdentity = multiply(1.0/a[i][j],identity[i])
-                    identity[i] = arrayIdentity
-                else:
-                    fail = True
-                    for x in range(len(a)):
-                        if(a[x][j] != 0 and x != i):
-                            fail = False
-                            arrayA = multiply((1.0/(a[x][j])),a[x])
-                            a[i] = add(a[i],arrayA)
-                            arrayIdentity = multiply((1.0/(a[x][j])),identity[x])
-                            identity[i] = add(identity[i],arrayIdentity)
-                            break
-                    if(fail):
-                        print("Error in diag(): Everything column "+str(j)+" is 0")
-                            
+        
+    """                     
     return [a,identity]
     
 
 #returns [a,identity] updated
 def lowerT(a,identity):
     """Plan:
-        1. Find an element within the lower triangle
-        2. If the element is 0, do nothing
-        3. If the element is 1-9:
-            find the diagonal element in the same column
-            if the element is negative, multiply the diagonal-element row by (1.0 * element)
-            if the element is positive, multiply the diagonal-element row by (-1.0 * element)
-            add the diagonal-element row into the element row
+        
     """
-    for i in range(len(a)):
-        for j in range(len(a[0])):
-            if(i>j):
-                a[i][j] = -1
-            
     return [a,identity]
 
 
-#a[[]] = matrix to invert
 def inverse(a):
+    
     #Step 1: Check for errors:
     checkErrors(a)
         
