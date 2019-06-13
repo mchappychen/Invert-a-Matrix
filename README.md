@@ -6,14 +6,14 @@
 
 inverse( [ [ a , b ] , [ c , d ] ] )
 
-| a b |<br/>
-| c d |
+        | a b |<br/>
+        | c d |
 
 inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
 
-| a b c |<br/>
-| d e f |<br/>
-| g h i |
+        | a b c |<br/>
+        | d e f |<br/>
+        | g h i |
 
 
 It won't work if it doesn't pass the preconditions:
