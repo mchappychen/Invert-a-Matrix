@@ -9,7 +9,6 @@
     
 """
 from sys import exit
-import os
 
 #returns: b[] x a
 def multiply(a,b):
