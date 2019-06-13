@@ -10,6 +10,7 @@
 """
 from sys import exit
 
+
 #returns: b[] x a
 def multiply(a,b):
     if(a == 0):
@@ -140,11 +141,21 @@ def switch(a,identity):
             if there is, you screwed up, since this should not be possible, and it's un-invertible
         7. return the matrix
     """
-        return[a,identity]
+    #1
+    for x in a:
+        all_zeros = True
+        for y in x:
+            if(y != 0):
+                all_zeros = False
+                break
+        if(all_zeros):
+            pass
+    return[a,identity]
     
 
 def inverse(a):
     
+    exit()
     #Step 1: Check for errors:
     checkErrors(a)
         
