@@ -82,6 +82,7 @@ def upperT(a,identity):
         row := row - (current/above) * (above_row)
         if current = 0, do nothing
     """
+    
     return [a,identity]
 
 
@@ -154,19 +155,46 @@ def switch(a,identity):
                 all_zeros = False
                 break
         if(all_zeros):
-            exit("Your matrix has a row full of 0s")
+            exit("Error in switch(): Your matrix has a row full of 0s")
     #2
     for zeros in range(len(a)-1,0,-1): # 4...3...2...1 (zeros)
-        for row in a:  #row1...row2...row3...row4
+        for row_index in range(len(a)):  #row1...row2...row3...row4
             row_zeros = 0
-            for element in row:
-                if( element == 0):
-                    row_zeros += 1
-            if(row_zeros == zeros):
-                #try to put it in the bottom-most row
-                    
             
+            #Set row_zeros
+            for element in row:
+                if(element == 0):
+                    row_zeros += 1
+            
+            #Swap rows if needed
+            if(row_zeros == zeros):
+                #try to put it in the bottom-most row, if not, go up, if at the top, un-invertible
+                for row_to_check_index in range(len(a),-2,-1):
+                    if(row_to_check_index == -1):
+                        exit("The way 0s are positioned in row "+str(row_index)+" make it un-invertible")
+                    if(a[row_index][row_to_check_index] != 0 and (row_to_check_index not in lockedRows)):
+                        temp = a[row_to_check_index]
+                        a[row_to_check_index] = a[row_index]
+                        a[row_index] = temp
+                        lockedRows.append(row_to_check_index)
+                        break
     
+    for row_index in range(len(a)):
+        for column_index in range(len(a[0])):
+            #3. if above diag, check if element above 0 is 0 or non-existent, if not, then exit()
+            elif (row_index < column_index):
+                
+            
+            #4. if below diag, check if element below 0 is 0 or non-existent, if not then exit()
+            elif(row_index > column_index):
+                
+            #5. if diag, check if there's 0, if there is then exit()
+            elif(row_index == column_index):
+                
+            else:
+                exit("Error in switch(): This statement is impossible to occur.")
+    
+    #6
     return[a,identity]
     
 
