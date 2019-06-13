@@ -182,15 +182,21 @@ def switch(a,identity):
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
             #3. if above diag, check if element above 0 is 0 or non-existent, if not, then exit()
-            elif (row_index < column_index):
-                
+            if (row_index < column_index):
+                if((not row_index - 1 < 0)):
+                    if(a[row_index-1][column_index] != 0):
+                        exit("Error in switch(): There's a 1-9 above 0 aboved diagonal in row "+str(row_index))
             
             #4. if below diag, check if element below 0 is 0 or non-existent, if not then exit()
             elif(row_index > column_index):
-                
+                if(not row_index + 1 > len(a) - 1):
+                    if(a[row_index+1][column_index] != 0):
+                        exit("Error in switch(): There's a 1-9 below 0 below diagonal in row "+str(row_index))
+            
             #5. if diag, check if there's 0, if there is then exit()
             elif(row_index == column_index):
-                
+                if(a[row_index][column_index] == 0):
+                    exit("Error in switch(): There's a 0 in a diagonal in row "+ str(row_index))
             else:
                 exit("Error in switch(): This statement is impossible to occur.")
     
