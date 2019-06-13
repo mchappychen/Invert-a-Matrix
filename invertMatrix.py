@@ -98,11 +98,11 @@ def upperT(a,identity):
     n-1,3
     n-2,3
     ...
-    3,2
+    3,2      columns = 2
     
     """
     for columns in range(len(a)):
-        for rows in range(len(a)-1,columns-1,-1):
+        for rows in range(len(a)-1,columns+1,-1):
             if(a[rows][columns] != 0):
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),identity[rows-1])
     return [a,identity]
