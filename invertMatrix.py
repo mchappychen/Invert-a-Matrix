@@ -9,6 +9,7 @@
     
 """
 from sys import exit
+import os
 
 #returns: b[] x a
 def multiply(a,b):
@@ -106,6 +107,7 @@ def upperT(a,identity):
     ...
     n,n-1 | 
     """
+    
     return [a,identity]
 
 
@@ -285,3 +287,35 @@ def inverse(a):
     
     #Step 4: Return the Identity Matrix
     return identity
+
+def main():
+    if(not input("Do you want to input a matrix with our guide? (Type \'yes\') :: ").lower() == "yes"):
+        print("\nFine then, call the inverse() function yourself.")
+    else :
+        correctInput = True
+        while(correctInput):
+            try:
+                rows = int(input("How many rows/columns for your matrix? :: "))
+                if(rows > 0):
+                    correctInput = False
+                else:
+                    print("You did not enter a positive natural number, try again!")
+            except ValueError:
+                print("You did not enter a number, try again!")
+                
+        matrix = []
+        for x in range(rows):
+            row = []
+            for y in range(rows):
+                correctInput = True
+                while(correctInput):
+                    try:
+                        row.append(int(input("Enter row "+str(x)+" column "+str(y)+" :: ")))
+                        correctInput = False
+                    except ValueError:
+                        print("You did not enter a number, try again!")
+            matrix.append(row)
+        inverse(matrix)
+
+if __name__ == "__main__":
+    main()
