@@ -10,12 +10,10 @@
 """
 from sys import exit
 
-
 #returns: b[] x a
 def multiply(a,b):
     if(a == 0):
-        print("Error in multiply(): You can't multiply matrix by 0")
-        exit()
+        exit("Error in multiply(): You can't multiply matrix by 0")
     result = []
     for i in range(len(b)):
         result.append(b[i] * a)
@@ -26,8 +24,7 @@ def multiply(a,b):
 def add(a,b):
     result = []
     if(len(a) != len(b)):
-        print("Error in add(a,b): length of a[] not equal to length of b[]")
-        exit()
+        exit("Error in add(a,b): length of a[] not equal to length of b[]")
     for i in range(len(a)):
         result.append(a[i]+b[i])
     return result
@@ -64,11 +61,9 @@ def checkErrors(a):
         t = a[0][0]
         del t
     except TypeError:
-        print("Error in inverse(a): You need to input a matrix")
-        exit()
+        exit("Error in inverse(a): You need to input a matrix")
     if(len(a) != len(a[0])):
-        print("Error in inverse(a): You need to input a sqaure matrix")
-        exit()
+        exit("Error in inverse(a): You need to input a square matrix")
     for x in a:
         for y in x:
             if(y == None):
@@ -149,12 +144,12 @@ def switch(a,identity):
                 all_zeros = False
                 break
         if(all_zeros):
-            pass
+            exit("Your matrix has a row full of 0s")
+        
     return[a,identity]
     
 
 def inverse(a):
-    
     #Step 1: Check for errors:
     checkErrors(a)
         
