@@ -82,31 +82,29 @@ def upperT(a,identity):
         row := row - (current/above) * (above_row)
         if current = 0, do nothing
     
-    n,0
-    
+    n,0      
     n-1,0
-    n,1
-    
     n-2,0
+    ...
+    1,0      columns = 0
+    
+    n,1      
     n-1,1
-    n,2
-    
-    n-3,0 | 
     n-2,1
-    n-1,2
-    n,3
-    
     ...
+    2,1      columns = 1
     
-    1,0
-    2,1
+    n,3  
+    n-1,3
+    n-2,3
+    ...
     3,2
-    4,3
-    5,4
-    ...
-    n,n-1 | 
-    """
     
+    """
+    for columns in range(len(a)):
+        for rows in range(len(a)-1,columns-1,-1):
+            if(a[rows][columns] != 0):
+                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),identity[rows-1])
     return [a,identity]
 
 
@@ -142,6 +140,10 @@ def lowerT(a,identity):
         row := row - (current/below) * (below_row)
         if current = 0, do nothing
     """
+    for columns in range(len(a)-1,-1,-1):
+        for rows in range(len(a)):
+            if(a[rows][columns] != 0):
+                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),identity[rows-1])
     return [a,identity]
 
 
