@@ -124,8 +124,9 @@ def diag(a,identity):
         for column_index in range(len(a[0])):
             if(row_index == column_index):
                 if(a[row_index][column_index] != 1):
-                    a[row_index] = multiply(1.0/a[row_index][column_index],a[row_index])
-                    identity[row_index] = multiply(1.0/a[row_index][column_index],identity[row_index])
+                    multiplier = 1.0/a[row_index][column_index]
+                    a[row_index] = multiply(multiplier,a[row_index])
+                    identity[row_index] = multiply(multiplier,identity[row_index])
     return [a,identity]
     
 
