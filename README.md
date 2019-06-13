@@ -6,16 +6,13 @@
 
 inverse( [ [ a , b ] , [ c , d ] ] )
 
-| a b |
-
+| a b |<br/>
 | c d |
 
 inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
 
-| a b c |
-
-| d e f |
-
+| a b c |<br/>
+| d e f |<br/>
 | g h i |
 
 
