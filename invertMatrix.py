@@ -139,11 +139,23 @@ def lowerT(a,identity):
 
         row := row - (current/below) * (below_row)
         if current = 0, do nothing
+        
+        n,0
+        n,1
+        n,2
+        ...
+        n,n-1  column = n
+        
+        n-1,0
+        n-1,1
+        n-1,2
+        ...
+        n-2,n-1 column = n-1
     """
-    for columns in range(len(a)-1,-1,-1):
-        for rows in range(len(a)):
+    for columns in range(len(a)-1,0,-1):
+        for rows in range(0,column-1,1):
             if(a[rows][columns] != 0):
-                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),identity[rows-1])
+                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns]),a[rows+1]) , add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns]),identity[rows+1])
     return [a,identity]
 
 
