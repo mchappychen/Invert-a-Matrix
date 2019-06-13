@@ -5,11 +5,13 @@
         where abcd are numbers
     inverse() takes in a single sqaure matrix
 """
+from sys import exit
+
 #returns: b[] x a
 def multiply(a,b):
     if(a == 0):
         print("Error in multiply(): You can't multiply matrix by 0")
-        return None
+        exit()
     result = []
     for i in range(len(b)):
         result.append(b[i] * a)
@@ -21,7 +23,7 @@ def add(a,b):
     result = []
     if(len(a) != len(b)):
         print("Error in add(a,b): length of a[] not equal to length of b[]")
-        return None
+        exit()
     for i in range(len(a)):
         result.append(a[i]+b[i])
     return result
@@ -59,13 +61,15 @@ def checkErrors(a):
         del t
     except TypeError:
         print("Error in inverse(a): You need to input a matrix")
-        return None
+        exit()
     if(len(a) != len(a[0])):
         print("Error in inverse(a): You need to input a sqaure matrix")
+        exit()
     for x in a:
         for y in x:
             if(y == None):
                 print("Error in inverse(a): Matrix is missing values")
+                exit()
 
 
 #returns [a,identity] updated
@@ -92,6 +96,11 @@ def lowerT(a,identity):
     return [a,identity]
 
 
+#switches rows so that 0 is in bottom left or top right
+def switch(a,identity):
+    """Plan:
+    """
+
 def inverse(a):
     
     #Step 1: Check for errors:
@@ -112,6 +121,13 @@ def inverse(a):
     print("\nAugmented Matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
+    """Master Plan:
+        1. Swith rows until 0s are at the bottom or top of diagonal in switch()
+        2. Set the bottom-left triangle to 0 in upperT()
+        3. Set the diagonal to 1 in diag()
+    """
+    
+    #Step 4: Switch rows so that 0s 
     #Step 4: Convert diagonal into 1
     augment = diag(a,identity)
     a = augment[0]
@@ -132,7 +148,6 @@ def inverse(a):
     identity = augment[1]
     print("\nAfter lowerT(), augmented matrix looks like:\n")
     printAugmentedMatrix(a,identity)
-    
     
     #Step 7: Return the updated Identity Matrix
     return identity
