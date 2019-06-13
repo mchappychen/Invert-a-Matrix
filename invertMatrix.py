@@ -81,8 +81,31 @@ def upperT(a,identity):
         
         row := row - (current/above) * (above_row)
         if current = 0, do nothing
-    """
     
+    n,0
+    
+    n-1,0
+    n,1
+    
+    n-2,0
+    n-1,1
+    n,2
+    
+    n-3,0 | 
+    n-2,1
+    n-1,2
+    n,3
+    
+    ...
+    
+    1,0
+    2,1
+    3,2
+    4,3
+    5,4
+    ...
+    n,n-1 | 
+    """
     return [a,identity]
 
 
@@ -102,6 +125,7 @@ def diag(a,identity):
             if(row_index == column_index):
                 if(a[row_index][column_index] != 1):
                     a[row_index] = multiply(1.0/a[row_index][column_index],a[row_index])
+                    identity[row_index] = multiply(1.0/a[row_index][column_index],identity[row_index])
     return [a,identity]
     
 
@@ -162,8 +186,8 @@ def switch(a,identity):
             row_zeros = 0
             
             #Set row_zeros
-            for element in row:
-                if(element == 0):
+            for element_index in range(row_index):
+                if(a[row_index][element_index] == 0):
                     row_zeros += 1
             
             #Swap rows if needed
