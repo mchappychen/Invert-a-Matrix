@@ -7,12 +7,15 @@
 inverse( [ [ a , b ] , [ c , d ] ] )
 
 | a b |
+
 | c d |
 
 inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
 
 | a b c |
+
 | d e f |
+
 | g h i |
 
 
