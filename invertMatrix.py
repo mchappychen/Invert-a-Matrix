@@ -95,7 +95,12 @@ def diag(a,identity):
         
         row := (1/current) * row
         if current = 1, do nothing
-    """                     
+    """
+    for row_index in range(len(a)):
+        for column_index in range(len(a[0])):
+            if(row_index == column_index):
+                if(a[row_index][column_index] != 1):
+                    a[row_index] = multiply(1.0/a[row_index][column_index],a[row_index])
     return [a,identity]
     
 
@@ -118,24 +123,29 @@ def switch(a,identity):
     """Plan:
         For each step, start from the bottom-up
         1. Check if an entire row has 0s, then it's un-invertible
-        2. Check if an entire row has 3 0s, position it at the right row, and lock the row
+        
+        2. Check if an entire row has n-1 0s, position it at the right row, and lock the row
             If there are 2 rows that need to get in the same row, it's un-invertible
-        3. Check if an entire row has 2 0s, place it not on diagonal, starting from bottom, lock the row
+        2.1 Check if an entire row has n-2 0s, place it not on diagonal, starting from bottom, lock the row
             If the the row needs to place in a locked row, check above
             If it's on a diagonal, check the row above
             If you get to the top-most row, and it's locked, it's un-invertible
-        4. Check if an entire row has 1 0s, lock the row
+        2.2 Check if an entire row has n-3 0s, lock the row
             If it's on a diagonal, check the row above
             If the row needs to be place in a locked row, check above
             If you get to the top-most row, and it's locked, it's un-invertible
-        5. Check the matrix if there's a number below a 0 below the diagonal
+        ...
+            
+        3. Check the matrix if there's a number below a 0 below the diagonal
             if there is, then it's un-invertible
-        6. Check the matrix if there's a number above a 0 above the diagonal
+        4. Check the matrix if there's a number above a 0 above the diagonal
             if there is, then it's un-invertible
-        7. Check if there's a 0 in the diagonal
+        5. Check if there's a 0 in the diagonal
             if there is, you screwed up, since this should not be possible, and it's un-invertible
-        7. return the matrix
+        6. return the matrix
     """
+    lockedRows = []
+    
     #1
     for x in a:
         all_zeros = True
@@ -145,7 +155,18 @@ def switch(a,identity):
                 break
         if(all_zeros):
             exit("Your matrix has a row full of 0s")
-        
+    #2
+    for zeros in range(len(a)-1,0,-1): # 4...3...2...1 (zeros)
+        for row in a:  #row1...row2...row3...row4
+            row_zeros = 0
+            for element in row:
+                if( element == 0):
+                    row_zeros += 1
+            if(row_zeros == zeros):
+                #try to put it in the bottom-most row
+                    
+            
+    
     return[a,identity]
     
 
