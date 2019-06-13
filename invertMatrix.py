@@ -155,7 +155,6 @@ def switch(a,identity):
 
 def inverse(a):
     
-    exit()
     #Step 1: Check for errors:
     checkErrors(a)
         
