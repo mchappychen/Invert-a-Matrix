@@ -1,7 +1,6 @@
 from sys import exit
 
-#returns [a[]xb[]]
-def matrixMult(a,b):
+def matrixMult(a,b): #returns [a[]xb[]]
     result = []
     for i in range(len(a)):
         array = []
@@ -12,20 +11,14 @@ def matrixMult(a,b):
             array.append(element)
         result.append(array)
     return result
-
-
-#returns: [a x b[]]
-def multiply(a,b):
+def multiply(a,b): #returns: [a x b[]]
     if(a == 0):
         exit("Error in multiply(): You can't multiply matrix by 0")
     result = []
     for element in b:
         result.append(element * a)
     return result
-
-
-#returns [a[]+b[]]
-def add(a,b):
+def add(a,b): #returns [a[]+b[]]
     result = []
     if(len(a) != len(b)):
         exit("Error in add(a,b): length of a[] not equal to length of b[]")
@@ -73,45 +66,29 @@ def checkErrors(a):
             if(y == None):
                 exit("Error in inverse(a): Matrix is missing values")
 
-#returns [a,identity] updated
-def upperT(a,identity):
+def upperT(a,identity): #returns [a,identity] updated
     """Plan:
         xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
         xxxx  > xxxx  > xxxx  > 0xxx  > 0xxx  > 0xxx
         xxxx    0xxx    0xxx    0xxx    00xx    00xx
         0xxx    0xxx    00xx    00xx    00xx    000x
         
-        row := row - (current/above) * (above_row)
-        if current = 0, do nothing
-    
-    n,0      
-    n-1,0
-    n-2,0
-    ...
-    1,0      columns = 0
-    
-    n,1      
-    n-1,1
-    n-2,1
-    ...
-    2,1      columns = 1
-    
-    n,3  
-    n-1,3
-    n-2,3
-    ...
-    3,2      columns = 2
+        if it's not 0:
+            row := row + (-1 * current/above) * (above_row)
+                Issue: 'above' could be 0
+        
+
     
     """
-    for columns in range(len(a)):
+    for columns in range(len(a)-1):
         for rows in range(len(a)-1,columns,-1):
-            if(a[rows][columns] != 0 and (rows != columns)):
+            if(a[rows][columns] != 0):
+                if(a[rows-1][columns] == 0):
+                    exit("Error in upperT() There's a 0 above a number")
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , a[rows])
     return [a,identity]
 
-
-#returns [a,identity] updated
-def diag(a,identity):
+def diag(a,identity): #turns diagonal into 1
     """Plan:        
         1xxx    1xxx    1xxx    1xxx
         0xxx  > 01xx  > 01xx  > 01xx
@@ -123,36 +100,24 @@ def diag(a,identity):
     """
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
-            if(row_index == column_index):
-                if(a[row_index][column_index] != 1):
-                    multiplier = 1.0/a[row_index][column_index]
-                    a[row_index] = multiply(multiplier,a[row_index])
-                    identity[row_index] = multiply(multiplier,identity[row_index])
+            if(row_index == column_index and a[row_index][column_index] != 1):
+                multiplier = 1.0/a[row_index][column_index]
+                a[row_index] = multiply(multiplier,a[row_index])
+                identity[row_index] = multiply(multiplier,identity[row_index])
     return [a,identity]
     
 
-#returns [a,identity] updated
-def lowerT(a,identity):
+def lowerT(a,identity): #returns [a,identity] updated
     """Plan:
         1xx0    1xx0    1x00    1x00    1x00    1000
         01xx  > 01x0  > 01x0  > 01x0  > 0100  > 0100
         001x    001x    001x    0010    0010    0010
         0001    0001    0001    0001    0001    0001
 
-        row := row - (current/below) * (below_row)
-        if current = 0, do nothing
-        
-        n,0
-        n,1
-        n,2
-        ...
-        n,n-1  column = n
-        
-        n-1,0
-        n-1,1
-        n-1,2
-        ...
-        n-2,n-1 column = n-1
+        if it's not 0:
+            row := row - (current/below) * (below_row)
+            Issue: 'below' could be 0
+
     """
     for columns in range(len(a)-1,0,-1):
         for rows in range(0,columns,1):
@@ -160,9 +125,9 @@ def lowerT(a,identity):
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns],a[rows+1]) , a[rows])
     return [a,identity]
 
-#checks if A-1 x I = A
-def checkInverseMatrix(A_inverse,A):
-    """Checks if A_inverse x A = I
+
+def checkInverseMatrix(A_inverse,A): #checks if A-1 x I = A
+    """
         1. Create identity matrix
         2. Multiply a_inverse by identity matrix
         3. Check if the result is A
@@ -213,7 +178,6 @@ def switch(a,identity):
             if there is, then it's un-invertible
         5. Check if there's a 0 in the diagonal
             if there is, you screwed up, since this should not be possible, and it's un-invertible
-        6. Check if A-1 x I = A
     """
     lockedRows = []
     
@@ -240,9 +204,10 @@ def switch(a,identity):
             if(row_zeros == zeros):
                 #try to put it in the bottom-most row, if not, go up, if at the top, un-invertible
                 for row_to_check_index in range(len(a),-2,-1):
+                    print(row_index,row_to_check_index)
                     if(row_to_check_index == -1):
                         exit("The way 0s are positioned in row "+str(row_index)+" make it un-invertible")
-                    if(a[row_index][row_to_check_index] != 0 and (row_to_check_index not in lockedRows)):
+                    elif(a[row_index][row_to_check_index] != 0 and (row_to_check_index not in lockedRows)):
                         temp = a[row_to_check_index]
                         a[row_to_check_index] = a[row_index]
                         a[row_index] = temp
@@ -304,7 +269,7 @@ def inverse(a):
         4. LowerT
         5. Check A-1 x I = A
     """
-    #1. Switch
+    #1. Switch rows
     augment = switch(a,identity)
     a = augment[0]
     identity = augment[1]
@@ -335,6 +300,7 @@ def inverse(a):
     #Step 5: Check A-1 x I = A
     checkInverseMatrix(identity,temp)
     return identity
+
 
 def main():
     if(not input("Do you want to input a matrix with our guide? (Type \'yes\') :: ").lower() in ("yes","y")):
