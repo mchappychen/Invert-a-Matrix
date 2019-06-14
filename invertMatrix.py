@@ -94,7 +94,6 @@ def upperT(a,identity):
         for rows in range(len(a)-1,columns,-1):
             if(a[rows][columns] != 0 and (rows != columns)):
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , a[rows])
-                printAugmentedMatrix(a,identity)
     return [a,identity]
 
 
@@ -173,7 +172,7 @@ def switch(a,identity):
             if there is, then it's un-invertible
         5. Check if there's a 0 in the diagonal
             if there is, you screwed up, since this should not be possible, and it's un-invertible
-        6. return the matrix
+        6. Check if A-1 x I = A
     """
     lockedRows = []
     
@@ -261,6 +260,7 @@ def inverse(a):
         2. UpperT
         3. Diag
         4. LowerT
+        5. Check A-1 x I = A
     """
     
     #1. Switch
@@ -291,7 +291,7 @@ def inverse(a):
     print("\nAfter lowerT(), augmented matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
-    #Step 4: Return the Identity Matrix
+    #Step 5: Return the Identity Matrix
     return identity
 
 def main():
