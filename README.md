@@ -18,7 +18,7 @@ inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
 
 
 Not all matricies can be inverted cause my code sux<br/>
-It uses the dumb Gauss-Jordan methods<br/>
+It uses the dumb Gauss-Jordan methods of switch,add,multiply<br/>
 This is how my algorithm works for a 4x4 matrix, where x is a random number:
 
         
