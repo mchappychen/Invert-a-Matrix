@@ -119,6 +119,7 @@ def lowerT(a,identity): #returns [a,identity] updated
 
     """
     for columns in range(len(a)-1,0,-1):
+        
         for rows in range(0,columns,1):
             if(a[rows][columns] != 0 and (rows != columns)):
                 multiplier = (-1.0 * a[rows][columns])/a[rows+1][columns]
@@ -133,17 +134,15 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
         2. Multiply a_inverse by A
         3. Check if the result is identity
     """
-    printMatrix(A_inverse)
-    printMatrix(A)
     #1
     identity = []
     for x in range(len(A_inverse)):
         row = []
         for y in range(len(A_inverse)):
             if(x == y):
-                row.append(1)
+                row.append(1.0)
             else:
-                row.append(0)
+                row.append(0.0)
         identity.append(row)
                 
     #2
@@ -152,12 +151,22 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
     #3
     print("A-1 x A becomes:\n")
     printMatrix(A_inverse)
-    if(A_inverse == identity):
-        print("\n Inverted successfully")
+    success = True
+    for x in range(len(A_inverse)):
+        for y in range(len(A_inverse)):
+            if(x == y):
+                if(round(A_inverse[x][y],2) != 1.00):
+                    print("Element at (",x,",",y,") of A-1xA is",A_inverse[x][y])
+                    success = False
+            else:
+                if(round(A_inverse[x][y],2) != 0.0):
+                    print("Element at (",x,",",y,") of A-1xA is",A_inverse[x][y])
+                    success = False
+    if(success):
+        print("Successfully inverted matrix")
     else:
-        print("Error: Inverted wrongly")
+        print("Matrix inversion failed")
 
-#switches rows so that 0 is in bottom left or top right
 def switch(a,identity):
     """Plan:
         For each step, start from the bottom-up
@@ -262,9 +271,9 @@ def inverse(a):
         element = []
         for y in range(len(a)):
             if(x == y):
-                element.append(1)
+                element.append(1.0)
             else:
-                element.append(0)
+                element.append(0.0)
         identity.append(element)
 
     #Step 3: Print augmented matrix
@@ -333,7 +342,7 @@ def main():
                 correctInput = True
                 while(correctInput):
                     try:
-                        row.append(int(input("Enter row "+str(x)+" column "+str(y)+" :: ")))
+                        row.append(float(input("Enter row "+str(x)+" column "+str(y)+" :: ")))
                         correctInput = False
                     except ValueError:
                         print("You did not enter a number, try again!")
