@@ -101,9 +101,10 @@ def upperT(a,identity):
     
     """
     for columns in range(len(a)):
-        for rows in range(len(a)-1,columns+1,-1):
-            if(a[rows][columns] != 0):
+        for rows in range(len(a)-1,columns,-1):
+            if(a[rows][columns] != 0 and (rows != columns)):
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , a[rows])
+                printAugmentedMatrix(a,identity)
     return [a,identity]
 
 
@@ -152,8 +153,8 @@ def lowerT(a,identity):
         n-2,n-1 column = n-1
     """
     for columns in range(len(a)-1,0,-1):
-        for rows in range(0,columns-1,1):
-            if(a[rows][columns] != 0):
+        for rows in range(0,columns,1):
+            if(a[rows][columns] != 0 and (rows != columns)):
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns],a[rows+1]) , a[rows])
     return [a,identity]
 
