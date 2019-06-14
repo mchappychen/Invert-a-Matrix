@@ -1,7 +1,7 @@
 # Inverts a square matrix
 
-1. Run the program
-2. Pass a square-matrix into inverse(a[][])
+Run the program and follow its directions<br/>
+Or pass a square-matrix into inverse(a[][])
 
 
 inverse( [ [ a , b ] , [ c , d ] ] )
@@ -16,23 +16,25 @@ inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
         | g h i |
 
 
-It won't work if it doesn't pass the preconditions:
+Not all matricies can be inverted. 
 
-        For each step, start from the bottom-up
-        1. Check if an entire row has 0s, then it's un-invertible
-        2. Check if an entire row has 3 0s, position it at the right row, and lock the row
-            If there are 2 rows that need to get in the same row, it's un-invertible
-        3. Check if an entire row has 2 0s, place it not on diagonal, starting from bottom, lock the row
-            If the the row needs to place in a locked row, check above
-            If it's on a diagonal, check the row above
-            If you get to the top-most row, and it's locked, it's un-invertible
-        4. Check if an entire row has 1 0s, lock the row
-            If it's on a diagonal, check the row above
-            If the row needs to be place in a locked row, check above
-            If you get to the top-most row, and it's locked, it's un-invertible
-        5. Check the matrix if there's a number below a 0 below the diagonal
-            if there is, then it's un-invertible
-        6. Check the matrix if there's a number above a 0 above the diagonal
-            if there is, then it's un-invertible
-        7. Check if there's a 0 in the diagonal
-            if there is, you screwed up, since this should not be possible, and it's un-invertible
+This is how my algorithm works for a 4x4 matrix, where x is a random number
+It uses the Gauss-Jordan methods:
+        
+        1. UpperT():
+        xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
+        xxxx  > xxxx  > 0xxx  > 0xxx  > 0xxx  > 0xxx
+        xxxx    0xxx    0xxx    0xxx    00xx    00xx
+        0xxx    0xxx    0xxx    00xx    00xx    000x
+        
+        2. Diag():
+        1xxx    1xxx    1xxx    1xxx
+        0xxx  > 01xx  > 01xx  > 01xx
+        00xx    00xx    001x    001x
+        000x    000x    000x    0001
+        
+        3. LowerT():
+        1xx0    1xx0    1xx0    1x00    1x00    1000
+        01xx  > 01x0  > 01x0  > 01x0  > 0100  > 0100
+        001x    001x    0010    0010    0010    0010
+        0001    0001    0001    0001    0001    0001
