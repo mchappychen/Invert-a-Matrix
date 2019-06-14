@@ -76,16 +76,15 @@ def upperT(a,identity): #returns [a,identity] updated
         if it's not 0:
             row := row + (-1 * current/above) * (above_row)
                 Issue: 'above' could be 0
-        
-
-    
     """
     for columns in range(len(a)-1):
         for rows in range(len(a)-1,columns,-1):
             if(a[rows][columns] != 0):
                 if(a[rows-1][columns] == 0):
                     exit("Error in upperT() There's a 0 above a number")
-                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , a[rows])
+                multiplier = (-1.0 * a[rows][columns])/a[rows-1][columns]
+                a[rows] = add(multiply(multiplier,a[rows-1]) , a[rows])
+                identity[rows] = add(multiply(multiplier,identity[rows-1]) , identity[rows])
     return [a,identity]
 
 def diag(a,identity): #turns diagonal into 1
@@ -122,16 +121,20 @@ def lowerT(a,identity): #returns [a,identity] updated
     for columns in range(len(a)-1,0,-1):
         for rows in range(0,columns,1):
             if(a[rows][columns] != 0 and (rows != columns)):
-                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns],a[rows+1]) , a[rows])
+                multiplier = (-1.0 * a[rows][columns])/a[rows+1][columns]
+                a[rows] = add(multiply(multiplier,a[rows+1]) , a[rows])
+                identity[rows] = add(multiply(multiplier,identity[rows+1]) , identity[rows])
     return [a,identity]
 
 
-def checkInverseMatrix(A_inverse,A): #checks if A-1 x I = A
-    """
+def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
+    """ A_inverse = identity, A = temp
         1. Create identity matrix
-        2. Multiply a_inverse by identity matrix
-        3. Check if the result is A
+        2. Multiply a_inverse by A
+        3. Check if the result is identity
     """
+    printMatrix(A_inverse)
+    printMatrix(A)
     #1
     identity = []
     for x in range(len(A_inverse)):
@@ -144,12 +147,12 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x I = A
         identity.append(row)
                 
     #2
-    A_inverse = matrixMult(A_inverse,identity)
+    A_inverse = matrixMult(A_inverse,A)
     
     #3
-    print("A-1 x I becomes: \n:")
+    print("A-1 x A becomes:\n")
     printMatrix(A_inverse)
-    if(A_inverse == A):
+    if(A_inverse == identity):
         print("\n Inverted successfully")
     else:
         print("Error: Inverted wrongly")
@@ -243,7 +246,13 @@ def switch(a,identity):
     
 
 def inverse(a):
-    temp = a
+    #Copy a into temp without making a reference
+    temp = []
+    for x in a:
+        temp2 = []
+        for y in x:
+            temp2.append(y)
+        temp.append(temp2)
     #Step 1: Check for errors:
     checkErrors(a)
         
