@@ -16,10 +16,10 @@ inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
         | g h i |
 
 
-Not all matricies can be inverted. 
+Not all matricies can be inverted.<br/>
+It uses the Gauss-Jordan methods<br/>
+This is how my algorithm works for a 4x4 matrix, where x is a random number:
 
-This is how my algorithm works for a 4x4 matrix, where x is a random number
-It uses the Gauss-Jordan methods:
         
         1. UpperT():
         xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
