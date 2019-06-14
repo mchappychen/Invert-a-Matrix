@@ -104,7 +104,7 @@ def upperT(a,identity):
     for columns in range(len(a)):
         for rows in range(len(a)-1,columns+1,-1):
             if(a[rows][columns] != 0):
-                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns]),identity[rows-1])
+                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],identity[rows-1])
     return [a,identity]
 
 
@@ -153,7 +153,7 @@ def lowerT(a,identity):
         n-2,n-1 column = n-1
     """
     for columns in range(len(a)-1,0,-1):
-        for rows in range(0,column-1,1):
+        for rows in range(0,columns-1,1):
             if(a[rows][columns] != 0):
                 a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns]),a[rows+1]) , add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns]),identity[rows+1])
     return [a,identity]
@@ -224,18 +224,21 @@ def switch(a,identity):
             #3. if above diag, check if element above 0 is 0 or non-existent, if not, then exit()
             if (row_index < column_index):
                 if((not row_index - 1 < 0)):
-                    if(a[row_index-1][column_index] != 0):
+                    if(a[row_index][column_index] == 0 and a[row_index-1][column_index] != 0):
+                        printAugmentedMatrix(a,identity)
                         exit("Error in switch(): There's a 1-9 above 0 aboved diagonal in row "+str(row_index))
             
             #4. if below diag, check if element below 0 is 0 or non-existent, if not then exit()
             elif(row_index > column_index):
                 if(not row_index + 1 > len(a) - 1):
-                    if(a[row_index+1][column_index] != 0):
+                    if(a[row_index][column_index] == 0 and a[row_index+1][column_index] != 0):
+                        printAugmentedMatrix(a,identity)
                         exit("Error in switch(): There's a 1-9 below 0 below diagonal in row "+str(row_index))
             
             #5. if diag, check if there's 0, if there is then exit()
             elif(row_index == column_index):
                 if(a[row_index][column_index] == 0):
+                    printAugmentedMatrix(a,identity)
                     exit("Error in switch(): There's a 0 in a diagonal in row "+ str(row_index))
             else:
                 exit("Error in switch(): This statement is impossible to occur.")
