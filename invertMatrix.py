@@ -1,13 +1,3 @@
-"""
-    1. Run the program
-    2. Type inverse( [ [a,b],[c,d] ] )
-        where abcd are numbers
-    inverse() takes in a single sqaure matrix
-    
-    | a b |
-    | c d |
-    
-"""
 from sys import exit
 
 #returns: b[] x a
