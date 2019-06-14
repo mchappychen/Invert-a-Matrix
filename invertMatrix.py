@@ -104,7 +104,7 @@ def upperT(a,identity):
     for columns in range(len(a)):
         for rows in range(len(a)-1,columns+1,-1):
             if(a[rows][columns] != 0):
-                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],identity[rows-1])
+                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows-1][columns],a[rows-1]) , a[rows])
     return [a,identity]
 
 
@@ -155,7 +155,7 @@ def lowerT(a,identity):
     for columns in range(len(a)-1,0,-1):
         for rows in range(0,columns-1,1):
             if(a[rows][columns] != 0):
-                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns]),a[rows+1]) , add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns]),identity[rows+1])
+                a[rows] = add(multiply((-1.0 * a[rows][columns])/a[rows+1][columns],a[rows+1]) , a[rows])
     return [a,identity]
 
 
@@ -305,7 +305,7 @@ def inverse(a):
     return identity
 
 def main():
-    if(not input("Do you want to input a matrix with our guide? (Type \'yes\') :: ").lower() == "yes"):
+    if(not input("Do you want to input a matrix with our guide? (Type \'yes\') :: ").lower() in ("yes","y")):
         print("\nFine then, call the inverse() function yourself.")
     else :
         correctInput = True
