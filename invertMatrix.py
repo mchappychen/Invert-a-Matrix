@@ -1,32 +1,26 @@
 from sys import exit
 
-#returns a[]xb[]
+#returns [a[]xb[]]
 def matrixMult(a,b):
     result = []
-    m = len(a)
-    p = len(b[0])
-    n = len(a[0]) 
-    #Step 2: Compute result[]
-    #print("\nm:",m,"p:",p,"n:",n)
-    for i in range(m):
+    for i in range(len(a)):
         array = []
-        for j in range(p):
+        for j in range(len(b[0])):
             element = 0
-            for k in range(n):
+            for k in range(len(a[0])):
                 element += a[i][k] * b[k][j]
             array.append(element)
         result.append(array)
-            
     return result
 
 
-#returns: b[] x a
+#returns: [a x b[]]
 def multiply(a,b):
     if(a == 0):
         exit("Error in multiply(): You can't multiply matrix by 0")
     result = []
-    for i in range(len(b)):
-        result.append(b[i] * a)
+    for element in b:
+        result.append(element * a)
     return result
 
 
@@ -78,7 +72,6 @@ def checkErrors(a):
         for y in x:
             if(y == None):
                 exit("Error in inverse(a): Matrix is missing values")
-
 
 #returns [a,identity] updated
 def upperT(a,identity):
