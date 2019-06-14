@@ -3,58 +3,11 @@ from sys import exit
 #returns a[]xb[]
 def matrixMult(a,b):
     result = []
-    try:
-        m = len(a)
-        t = len(a[0])
-    except TypeError:
-        print("\nError: a is not a matrix")
-        return None
-    try:
-        p = len(b[0])
-        t = len(b)
-    except TypeError:
-        print("\nError: b is not a matrix")
-        return None
+    m = len(a)
+    p = len(b[0])
     n = len(a[0]) 
-        
-    #Step 1: Print the matricies for user
-    print("Matrix a:")
-    for x in a:
-        string = "| "
-        for y in x:
-            string += str(y)+" "
-        string += "|"
-        print(string)
-    
-    print("\nMatrix b:")
-    for x in b:
-        string = "| "
-        for y in x:
-            string += str(y)+" "
-        string += "|"
-        print(string)   
-    
-    #Step 2: Check if input format is wrong
-    if(len(a) == 0 or len(a[0]) == 0):
-        print("\nError: Matrix a is missing values")
-    if(len(b) == 0 or len(b[0]) == 0):
-        print("\nError: Matrix b is missing values")
-    if(n != len(b)):
-        print("\nError: n is not the same")
-        return None
-    count = len(a[0])
-    for x in a:
-        if(len(x) != count):
-            print("\nError: Matrix a incorrect format")
-            return None
-    count = len(b[0])
-    for x in b:
-        if(len(x) != count):
-            print("\nError: Matrix b incorrect format")
-            return None
-    
-    #Step 3: Compute result[]
-    print("\nm:",m,"p:",p,"n:",n)
+    #Step 2: Compute result[]
+    #print("\nm:",m,"p:",p,"n:",n)
     for i in range(m):
         array = []
         for j in range(p):
@@ -64,14 +17,6 @@ def matrixMult(a,b):
             array.append(element)
         result.append(array)
             
-    #Step 4: Print result[] for user
-    print("\nMatrix axb:")
-    for x in result:
-        string = "| "
-        for y in x:
-            string += str(y)+" "
-        string += "|"
-        print(string)
     return result
 
 
@@ -100,7 +45,7 @@ def printMatrix(a):
     for x in a:
         string = "|\t"
         for y in x:
-            string += str(y)+"\t"
+            string += str(round(y,2))+"\t"
         string += "|"
         print(string)
     print("")
@@ -224,14 +169,32 @@ def lowerT(a,identity):
 
 #checks if A-1 x I = A
 def checkInverseMatrix(A_inverse,A):
-    """Plan:
+    """Checks if A_inverse x A = I
         1. Create identity matrix
         2. Multiply a_inverse by identity matrix
         3. Check if the result is A
-    """ 
+    """
     #1
+    identity = []
+    for x in range(len(A_inverse)):
+        row = []
+        for y in range(len(A_inverse)):
+            if(x == y):
+                row.append(1)
+            else:
+                row.append(0)
+        identity.append(row)
+                
+    #2
+    A_inverse = matrixMult(A_inverse,identity)
     
-
+    #3
+    print("A-1 x I becomes: \n:")
+    printMatrix(A_inverse)
+    if(A_inverse == A):
+        print("\n Inverted successfully")
+    else:
+        print("Error: Inverted wrongly")
 
 #switches rows so that 0 is in bottom left or top right
 def switch(a,identity):
@@ -322,6 +285,7 @@ def switch(a,identity):
     
 
 def inverse(a):
+    temp = a
     #Step 1: Check for errors:
     checkErrors(a)
         
@@ -347,7 +311,6 @@ def inverse(a):
         4. LowerT
         5. Check A-1 x I = A
     """
-    
     #1. Switch
     augment = switch(a,identity)
     a = augment[0]
@@ -376,7 +339,8 @@ def inverse(a):
     print("\nAfter lowerT(), augmented matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
-    #Step 5: Return the Identity Matrix
+    #Step 5: Check A-1 x I = A
+    checkInverseMatrix(identity,temp)
     return identity
 
 def main():
