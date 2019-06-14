@@ -118,8 +118,7 @@ def lowerT(a,identity): #returns [a,identity] updated
             Issue: 'below' could be 0
 
     """
-    for columns in range(len(a)-1,0,-1):
-        
+    for columns in range(len(a)-1,0,-1):  
         for rows in range(0,columns,1):
             if(a[rows][columns] != 0 and (rows != columns)):
                 multiplier = (-1.0 * a[rows][columns])/a[rows+1][columns]
