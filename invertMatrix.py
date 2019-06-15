@@ -228,7 +228,6 @@ def switch(a,identity):
             if(row_zeros == zeros):
                 #try to put it in the bottom-most row, if not, go up, if at the top, un-invertible
                 for row_to_check_index in range(len(a)-1,-2,-1):
-                    print(row_index,row_to_check_index)
                     if(row_to_check_index == -1):
                         exit("The way 0s are positioned in row "+str(row_index)+" make it un-invertible")
                     elif(a[row_index][row_to_check_index] != 0 and (row_to_check_index not in lockedRows)):
@@ -375,7 +374,7 @@ def main():
         for x in range(rows):
             row = []
             for y in range(rows):
-                row.append(round(random.random()*100,0))
+                row.append(round(random.random()*100+1,0))
             matrix.append(row)
         inverse(matrix)
     elif(response == "3"):
