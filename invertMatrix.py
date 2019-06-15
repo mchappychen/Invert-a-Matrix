@@ -33,9 +33,6 @@ def printMatrix(a): #prints a[[]]
         string += "|"
         print(string)
     print("")
-    
-
-#prings a[[]] | b[[]]
 def printAugmentedMatrix(a,b): #prings a[[]] | b[[]]
     for x in range(len(a)):
         string = "|\t"
@@ -47,10 +44,7 @@ def printAugmentedMatrix(a,b): #prings a[[]] | b[[]]
         string += "|"
         print(string)
     print("")
-
-
-#makes sure a[[]] is correct format
-def checkErrors(a):
+def checkErrors(a): #Makes sure input is correct format
     try:
         t = a[0][0]
         del t
