@@ -61,7 +61,6 @@ def formatZeros(a): #turns -0.0 into 0.0
         for y in range(len(a)):
             a[x][y] += 0
     return a
-
 def upperT(a,identity): #returns [a,identity] updated
     """Plan:
         xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
@@ -92,7 +91,6 @@ def upperT(a,identity): #returns [a,identity] updated
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
-
 def diag(a,identity): #turns diagonal into 1
     """Plan:        
         1xxx    1xxx    1xxx    1xxx
@@ -114,8 +112,6 @@ def diag(a,identity): #turns diagonal into 1
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
-    
-
 def lowerT(a,identity): #returns [a,identity] updated
     """Plan:
         1xx0    1xx0    1x00    1x00    1x00    1000
@@ -129,7 +125,6 @@ def lowerT(a,identity): #returns [a,identity] updated
                 if below out of index
                     throw error
             row := row - (current/below) * (below_row)
-
     """
     for columns in range(len(a)-1,0,-1):  
         for rows in range(0,columns,1):
@@ -147,8 +142,6 @@ def lowerT(a,identity): #returns [a,identity] updated
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
-
-
 def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
     """ A_inverse = identity, A = temp
         1. Create identity matrix
@@ -193,7 +186,6 @@ def switch(a,identity):
     """Plan:
         For each step, start from the bottom-up
         1. Check if an entire row has 0s, then it's un-invertible
-        
         2. Check if an entire row has n-1 0s, position it at the right row, and lock the row
             If there are 2 rows that need to get in the same row, it's un-invertible
         2.1 Check if an entire row has n-2 0s, place it not on diagonal, starting from bottom, lock the row
@@ -236,7 +228,7 @@ def switch(a,identity):
             #Swap rows if needed
             if(row_zeros == zeros):
                 #try to put it in the bottom-most row, if not, go up, if at the top, un-invertible
-                for row_to_check_index in range(len(a),-2,-1):
+                for row_to_check_index in range(len(a)-1,-2,-1):
                     print(row_index,row_to_check_index)
                     if(row_to_check_index == -1):
                         exit("The way 0s are positioned in row "+str(row_index)+" make it un-invertible")
@@ -341,8 +333,6 @@ def inverse(a):
     #Step 5: Check A-1 x I = A
     checkInverseMatrix(identity,temp)
     return identity
-
-
 def main():
     if(not input("Do you want to input a matrix with our guide? (Type \'yes\') :: ").lower() in ("yes","y")):
         print("\nFine then, call the inverse() function yourself.")
@@ -371,6 +361,5 @@ def main():
                         print("You did not enter a number, try again!")
             matrix.append(row)
         inverse(matrix)
-
 if __name__ == "__main__":
     main()
