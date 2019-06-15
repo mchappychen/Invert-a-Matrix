@@ -187,7 +187,7 @@ def switch(a,identity):
             un-invertible
         2. Create a blank array[]
         3. For each row in 'a', create a vector[]
-            For each element in the row, append its index in array
+            For each element in the row, append its index in array if it aint 0
             Add the vector[] into array[]
         4. Create another blank array2[]
             For each vector[] in array[], add its number of 0s like so:
@@ -197,14 +197,46 @@ def switch(a,identity):
             array2[0][1] = [1,2]    = row indices it can be placed in
         5. Create a new matrix for 'a' and identity
         6. Starting from the bottom to up:
+            array2[0] = [ 3 ,[1,2] ]
             add an index for each row of where they'll be in the new matrix
                 select the row by:
                     1. They must include the row-index in their array2
                     2. Out of those, select the one with the most 0s
                     3. If there are 2 candidates, select the one with smaller len()
                     4. If there is none to input, un-invertible
+        7. Put them in newMatrix in correct order
+        8. copy newMatrix into a and identity
     """
- 
+    for x in range(len(a)): #1 If an entire row is 0: un-invertible
+        allZeros = True
+        for y in range(len(a)):
+            if(a[x][y] != 0.0):
+                allZeros = False
+                break
+        if(allZeros):
+            exit("Error in switch(): Row ",x," is all 0s")
+    array = [] #2
+    for x in range(len(a)): #3
+        vector = []
+        for y in range(len(a)):
+            if(a[x][y] != 0):
+                vector.append(y)
+        array.append(vector)
+    array2 = [] #4
+    for vector in array:
+        zeroes = 0
+        for y in vector:
+            if(y == 0):
+                zeroes += 1
+        array2.append([zeroes,vector])
+    newMatrixA = [] #5
+    newMatrixIdentity = []
+    for row_index in range(len(a)-1,-1): #6
+        listOfGoodRows = []
+        for x in array2:
+            if(row_index in x[1]):
+                listOfGoodRows.append(x)
+        
     """checks for any 0s in diagonal"""
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
