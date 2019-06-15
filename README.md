@@ -1,7 +1,6 @@
 # Inverts a square matrix
 
 Run the program and follow its directions<br/>
-Or pass a square-matrix into inverse(a[][])
 
 If you're too dumb to not know how to run a python script, just copy everything and paste it here: https://www.onlinegdb.com/online_python_compiler
 
