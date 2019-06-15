@@ -216,12 +216,12 @@ def switch(a,identity):
             exit("Error in switch(): Your matrix has a row full of 0s")
     #2
     for zeros in range(len(a)-1,0,-1): # 4...3...2...1 (zeros)
-        for row_index in range(len(a)):  #row1...row2...row3...row4
+        for row_index in range(len(a)-1,-1,-1):  #row1...row2...row3...row4
             row_zeros = 0
             
             #Set row_zeros
-            for element_index in range(row_index):
-                if(a[row_index][element_index] == 0):
+            for column_index in range(len(a)):
+                if(a[row_index][column_index] == 0):
                     row_zeros += 1
             
             #Swap rows if needed
@@ -237,7 +237,7 @@ def switch(a,identity):
                         lockedRows.append(row_to_check_index)
                         break
     
-    for row_index in range(len(a)):
+    for row_index in range(len(a)): #none of these should be executed
         for column_index in range(len(a[0])):
             #3. if above diag, check if element above 0 is 0 or non-existent, if not, then exit()
             if (row_index < column_index):
