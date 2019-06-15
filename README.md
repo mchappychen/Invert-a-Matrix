@@ -2,22 +2,22 @@
 
 Run the program and follow its directions<br/>
 
-If you're too dumb to not know how to run a python script, just copy everything and paste it here: https://www.onlinegdb.com/online_python_compiler
+If you're too dumb to not know how to run a python script, just copy everything from invertMatrix.py and paste it here: https://www.onlinegdb.com/online_python_compiler
 
-inverse( [ [ a , b ] , [ c , d ] ] )
+[ [ a , b ] , [ c , d ] ]
 
         | a b |
         | c d |
 
-inverse( [ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ] )
+[ [ a , b , c ] , [ d , e , f ] , [ g , h , i ] ]
 
         | a b c |
         | d e f |
         | g h i |
 
 
-Not all matricies can be inverted cause my code sux<br/>
-It uses the dumb Gauss-Jordan methods of switch,add,multiply<br/>
+Not all matricies can be inverted cause my code sux or you have too many zeros<br/>
+It uses the dumb Gauss-Jordan methods of switching rows, adding rows, and multiply rows<br/>
 This is how my algorithm works for a 4x4 matrix, where x is a random number:
 
         
