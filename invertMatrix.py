@@ -374,7 +374,7 @@ def main():
         for x in range(rows):
             row = []
             for y in range(rows):
-                row.append(round(random.random()*100+1,0))
+                row.append(round(random.random()*10+1,0))
             matrix.append(row)
         inverse(matrix)
     elif(response == "3"):
