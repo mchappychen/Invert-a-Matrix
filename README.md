@@ -17,7 +17,7 @@ If you're too dumb to not know how to run a python script, just copy everything 
 
 
 Not all matricies can be inverted cause my code sux or you have too many zeros<br/>
-It uses the dumb Gauss-Jordan methods of switching rows, adding rows, and multiply rows<br/>
+It uses the dumb Gauss-Jordan methods of switching rows, adding rows, and multiplying rows<br/>
 This is how my algorithm works for a 4x4 matrix, where x is a random number:
 
         
