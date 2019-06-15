@@ -237,6 +237,9 @@ def switch(a,identity):
             if(row_index in x[1]):
                 listOfGoodRows.append(x)
         
+    
+    a = newMatrixA #8
+    identity = newMatrixIdentity 
     """checks for any 0s in diagonal"""
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
