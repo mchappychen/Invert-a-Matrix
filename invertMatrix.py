@@ -25,28 +25,25 @@ def add(a,b): #returns [a[]+b[]]
     for i in range(len(a)):
         result.append(a[i]+b[i])
     return result
-
-
-#prints a[[]]
-def printMatrix(a):
+def printMatrix(a): #prints a[[]]
     for x in a:
         string = "|\t"
         for y in x:
-            string += str(round(y,2))+"\t"
+            string += str(round(y,2)+0)+"\t"
         string += "|"
         print(string)
     print("")
     
 
 #prings a[[]] | b[[]]
-def printAugmentedMatrix(a,b):
+def printAugmentedMatrix(a,b): #prings a[[]] | b[[]]
     for x in range(len(a)):
         string = "|\t"
         for y in range(len(a[0])):
-            string += str(round(a[x][y],2)) + "\t"
+            string += str(round(a[x][y],2)+0) + "\t"
         string += "|\t"
         for y in range(len(b[0])):
-            string += str(round(b[x][y],2)) + "\t"
+            string += str(round(b[x][y],2)+0) + "\t"
         string += "|"
         print(string)
     print("")
@@ -65,6 +62,11 @@ def checkErrors(a):
         for y in x:
             if(y == None):
                 exit("Error in inverse(a): Matrix is missing values")
+def formatZeros(a): #turns -0.0 into 0.0
+    for x in range(len(a)):
+        for y in range(len(a)):
+            a[x][y] += 0
+    return a
 
 def upperT(a,identity): #returns [a,identity] updated
     """Plan:
@@ -74,17 +76,27 @@ def upperT(a,identity): #returns [a,identity] updated
         0xxx    0xxx    00xx    00xx    00xx    000x
         
         if it's not 0:
+            while(above is 0):
+                above := above again
+                if above out of index:
+                    throw error
             row := row + (-1 * current/above) * (above_row)
-                Issue: 'above' could be 0
     """
     for columns in range(len(a)-1):
         for rows in range(len(a)-1,columns,-1):
             if(a[rows][columns] != 0):
-                if(a[rows-1][columns] == 0):
-                    exit("Error in upperT() There's a 0 above a number")
-                multiplier = (-1.0 * a[rows][columns])/a[rows-1][columns]
-                a[rows] = add(multiply(multiplier,a[rows-1]) , a[rows])
-                identity[rows] = add(multiply(multiplier,identity[rows-1]) , identity[rows])
+                above = 1
+                while(a[rows-above][columns] == 0):
+                    above += 1
+                    if(rows-above < 0):
+                        print("Error in UpperT() for (",rows,",",columns,"), a looks like:\n")
+                        printMatrix(a)
+                        exit("There's a 0 above the number")
+                multiplier = (-1.0 * a[rows][columns])/a[rows-above][columns]
+                a[rows] = add(multiply(multiplier,a[rows-above]) , a[rows])
+                identity[rows] = add(multiply(multiplier,identity[rows-above]) , identity[rows])
+    a = formatZeros(a)
+    identity = formatZeros(identity)
     return [a,identity]
 
 def diag(a,identity): #turns diagonal into 1
@@ -100,9 +112,13 @@ def diag(a,identity): #turns diagonal into 1
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
             if(row_index == column_index and a[row_index][column_index] != 1):
+                if(a[row_index][column_index] == 0):
+                    exit("Error in diag(): There's a 0 on the diagonal in ("+str(row_index)+","+str(column_index)+")")
                 multiplier = 1.0/a[row_index][column_index]
                 a[row_index] = multiply(multiplier,a[row_index])
                 identity[row_index] = multiply(multiplier,identity[row_index])
+    a = formatZeros(a)
+    identity = formatZeros(identity)
     return [a,identity]
     
 
@@ -114,16 +130,28 @@ def lowerT(a,identity): #returns [a,identity] updated
         0001    0001    0001    0001    0001    0001
 
         if it's not 0:
+            while(above is 0):
+                below := below again
+                if below out of index
+                    throw error
             row := row - (current/below) * (below_row)
-            Issue: 'below' could be 0
 
     """
     for columns in range(len(a)-1,0,-1):  
         for rows in range(0,columns,1):
             if(a[rows][columns] != 0 and (rows != columns)):
+                below = 1
+                while(a[rows+below][columns] == 0):
+                    below += 1
+                    if(rows+below > len(a)-1):
+                        print("Error in lowerT() for (",rows,",",columns,"), a looks like:\n")
+                        printMatrix(a)
+                        exit("There's a 0 above the number")
                 multiplier = (-1.0 * a[rows][columns])/a[rows+1][columns]
                 a[rows] = add(multiply(multiplier,a[rows+1]) , a[rows])
                 identity[rows] = add(multiply(multiplier,identity[rows+1]) , identity[rows])
+    a = formatZeros(a)
+    identity = formatZeros(identity)
     return [a,identity]
 
 
@@ -148,6 +176,7 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
     A_inverse = matrixMult(A_inverse,A)
     
     #3
+    A_inverse = formatZeros(A_inverse)
     print("A-1 x A becomes:\n")
     printMatrix(A_inverse)
     success = True
@@ -190,8 +219,7 @@ def switch(a,identity):
         5. Check if there's a 0 in the diagonal
             if there is, you screwed up, since this should not be possible, and it's un-invertible
     """
-    lockedRows = []
-    
+    lockedRows = []  
     #1
     for x in a:
         all_zeros = True
@@ -250,6 +278,8 @@ def switch(a,identity):
                 exit("Error in switch(): This statement is impossible to occur.")
     
     #6
+    a = formatZeros(a)
+    identity = formatZeros(identity)
     return[a,identity]
     
 
