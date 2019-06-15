@@ -1,5 +1,5 @@
 from sys import exit
-
+import random
 def matrixMult(a,b): #returns [a[]xb[]]
     result = []
     for i in range(len(a)):
@@ -181,7 +181,6 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
         print("Successfully inverted matrix")
     else:
         print("Matrix inversion failed")
-
 def switch(a,identity):
     """Plan:
         For each step, start from the bottom-up
@@ -267,8 +266,6 @@ def switch(a,identity):
     a = formatZeros(a)
     identity = formatZeros(identity)
     return[a,identity]
-    
-
 def inverse(a):
     #Copy a into temp without making a reference
     temp = []
@@ -332,11 +329,14 @@ def inverse(a):
     
     #Step 5: Check A-1 x I = A
     checkInverseMatrix(identity,temp)
+    identity = formatZeros(identity)
     return identity
 def main():
-    if(not input("Do you want to input a matrix with our guide? (Type \'yes\') :: ").lower() in ("yes","y")):
-        print("\nFine then, call the inverse() function yourself.")
-    else :
+    response = input("Enter \'1\' for manual input, or \'2\' for auto-generated input, or \'3\' to exit :: ")
+    if(not response in ("1","2","3")):
+        print("Only enter 1, 2 or 3")
+        main()
+    if(response == "1"):
         correctInput = True
         while(correctInput):
             try:
@@ -346,8 +346,7 @@ def main():
                 else:
                     print("You did not enter a positive natural number, try again!")
             except ValueError:
-                print("You did not enter a number, try again!")
-                
+                print("You did not enter a number, try again!")      
         matrix = []
         for x in range(rows):
             row = []
@@ -361,5 +360,27 @@ def main():
                         print("You did not enter a number, try again!")
             matrix.append(row)
         inverse(matrix)
+    elif(response == "2"):
+        correctInput = True
+        while(correctInput):
+            try:
+                rows = int(input("How many rows/columns for your matrix? :: "))
+                if(rows > 0):
+                    correctInput = False
+                else:
+                    print("You did not enter a positive natural number, try again!")
+            except ValueError:
+                print("You did not enter a number, try again!")
+        matrix = []
+        for x in range(rows):
+            row = []
+            for y in range(rows):
+                row.append(round(random.random()*100,0))
+            matrix.append(row)
+        inverse(matrix)
+    elif(response == "3"):
+        pass
+    else:
+        exit("Error in main(): This is unreachable code")
 if __name__ == "__main__":
     main()
