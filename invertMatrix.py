@@ -182,31 +182,35 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
     else:
         print("Matrix inversion failed")
 def switch(a,identity):
-    """Plan: (to be worked on)
+    """Plan: As long as diag isn't 0, we're fine
+        1. If an entire row is 0:
+            un-invertible
+        2. Create a blank array[]
+        3. For each row in 'a', create a vector[]
+            For each element in the row, append its index in array
+            Add the vector[] into array[]
+        4. Create another blank array2[]
+            For each vector[] in array[], add its number of 0s like so:
+                [ [3,[1,2]] , [1,[0,1,3,4]] , [0,[0,1,2,3,4]] , [2,[1,2,3]] , [3,[0,1]] ]
+            array2[0] = [3,[1,2]]   = row information
+            array2[0][0] = 3        = # of 0s in row
+            array2[0][1] = [1,2]    = row indices it can be placed in
+        5. Create a new matrix for 'a' and identity
+        6. Starting from the bottom to up:
+            add an index for each row of where they'll be in the new matrix
+                select the row by:
+                    1. They must include the row-index in their array2
+                    2. Out of those, select the one with the most 0s
+                    3. If there are 2 candidates, select the one with smaller len()
+                    4. If there is none to input, un-invertible
     """
  
-    """checks for any mis-placed 0s:"""
+    """checks for any 0s in diagonal"""
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
-            #3. if above diag, check if element above 0 is 0 or non-existent, if not, then exit()
-            if (row_index < column_index):
-                if((not row_index - 1 < 0)):
-                    if(a[row_index][column_index] == 0 and a[row_index-1][column_index] != 0):
-                        printAugmentedMatrix(a,identity)
-                        exit("Error in switch(): There's a 1-9 above 0 aboved diagonal in row "+str(row_index))
-            
-            #4. if below diag, check if element below 0 is 0 or non-existent, if not then exit()
-            elif(row_index > column_index):
-                if(not row_index + 1 > len(a) - 1):
-                    if(a[row_index][column_index] == 0 and a[row_index+1][column_index] != 0):
-                        printAugmentedMatrix(a,identity)
-                        exit("Error in switch(): There's a 1-9 below 0 below diagonal in row "+str(row_index))
-            
-            #5. if diag, check if there's 0, if there is then exit()
-            elif(row_index == column_index):
-                if(a[row_index][column_index] == 0):
-                    printAugmentedMatrix(a,identity)
-                    exit("Error in switch(): There's a 0 in a diagonal in row "+ str(row_index))
+            if(row_index == column_index and a[row_index][column_index] == 0):
+                printAugmentedMatrix(a,identity)
+                exit("Error in switch(): There's a 0 in a diagonal in row "+ str(row_index))
             else:
                 exit("Error in switch(): This statement is impossible to occur.")
     
@@ -323,7 +327,7 @@ def main():
         for x in range(rows):
             row = []
             for y in range(rows):
-                row.append(round(random.random()*10,0))
+                row.append(abs(round(random.random()*2-random.random()*2,0)))
             matrix.append(row)
         inverse(matrix)
     elif(response == "3"):
