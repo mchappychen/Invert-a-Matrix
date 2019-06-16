@@ -118,7 +118,9 @@ def diag(a,identity): #turns diagonal into 1
         for column_index in range(len(a[0])):
             if(row_index == column_index and a[row_index][column_index] != 1):
                 if(a[row_index][column_index] == 0):
-                    exit("Error in diag(): There's a 0 on the diagonal in ("+str(row_index)+","+str(column_index)+")")
+                    print("Error in diag(): There's a 0 on the diagonal in ("+str(row_index)+","+str(column_index)+")")
+                    print("Matrix is un-invertible")
+                    return None
                 multiplier = 1.0/a[row_index][column_index]
                 a[row_index] = multiply(multiplier,a[row_index])
                 identity[row_index] = multiply(multiplier,identity[row_index])
@@ -337,6 +339,8 @@ def inverse(a): #inverts a matrix
     
     #3. Diag
     augment = diag(a,identity)
+    if(augment == None):
+        return None
     a = augment[0]
     identity = augment[1]
     if(debug):
