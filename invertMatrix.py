@@ -1,6 +1,8 @@
 from sys import exit
 import random
 
+debug = False
+
 def matrixMult(a,b): #returns [] of a[] x b[]
     result = []
     for i in range(len(a)):
@@ -178,8 +180,9 @@ def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
     
     #3 Check if the result is equal to identity
     A_inverse = formatZeros(A_inverse)
-    print("A-1 x A becomes:\n")
-    printMatrix(A_inverse)
+    if(debug):
+        print("A-1 x A becomes:\n")
+        printMatrix(A_inverse)
     success = True
     for x in range(len(A_inverse)):
         for y in range(len(A_inverse)):
@@ -192,7 +195,7 @@ def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
                     print("A-1 x A Error: (",x,",",y,") is",round(A_inverse[x][y],2),"but should be 0")
                     success = False
     if(success):
-        print("Successfully inverted matrix")
+        print("Successfully inverted matrix\n")
     else:
         print("Matrix inversion failed")
 
@@ -249,7 +252,8 @@ def switch(a,identity): #repositions 0s so that it isn't on diagonal
             if(y in array[x][1] and len(array[x]) < 3):
                 canBePlaced.append(x)
         if(len(canBePlaced) == 0):
-            exit("Error in Switch(): Matrix is un-invertible by me")
+            print("Error in Switch(): Matrix is un-invertible by me")
+            return None
         elif(len(canBePlaced) == 1):
             array[canBePlaced[0]].append(y)
         else:
@@ -314,30 +318,36 @@ def inverse(a): #inverts a matrix
     """
     #1. Switch rows
     augment = switch(a,identity)
+    if(augment == None):
+        return None
     a = augment[0]
     identity = augment[1]
-    print("\nAfter switch(), augmented matrix looks like:\n")
-    printAugmentedMatrix(a,identity)
+    if(debug):
+        print("\nAfter switch(), augmented matrix looks like:\n")
+        printAugmentedMatrix(a,identity)
 
     #2. UpperT
     augment = upperT(a,identity)
     a = augment[0]
     identity = augment[1]
-    print("\nAfter upperT(), augmented matrix looks like:\n")
-    printAugmentedMatrix(a,identity)
+    if(debug):
+        print("\nAfter upperT(), augmented matrix looks like:\n")
+        printAugmentedMatrix(a,identity)
     
     #3. Diag
     augment = diag(a,identity)
     a = augment[0]
     identity = augment[1]
-    print("\nAfter diag(), augmented matrix looks like:\n")
-    printAugmentedMatrix(a,identity)
+    if(debug):
+        print("\nAfter diag(), augmented matrix looks like:\n")
+        printAugmentedMatrix(a,identity)
     
     #4. LowerT
     augment = lowerT(a,identity)
     a = augment[0]
     identity = augment[1]
-    print("\nAfter lowerT(), augmented matrix looks like:\n")
+    if(debug):
+        print("\nAfter lowerT(), augmented matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
     #Step 5: Check A-1 x A = I
@@ -346,11 +356,18 @@ def inverse(a): #inverts a matrix
     return identity
 
 def main(): #creates a matrix for inverse()
+    global debug
+    response = input("Would you like to enable debug? Type ('yes' or 'y') :: ")
+    if(("y" == response ) or ("yes" == response)):
+        debug = True
+    else:
+        debug = False
+    print("Debug turned to ",debug)
     response = input("Enter \'1\' for manual input, or \'2\' for auto-generated input, or \'3\' to exit :: ")
     if(not response in ("1","2","3")):
         print("Only enter 1, 2 or 3")
         main()
-    if(response == "1"):
+    elif(response == "1"):
         correctInput = True
         while(correctInput):
             try:
@@ -378,6 +395,16 @@ def main(): #creates a matrix for inverse()
         correctInput = True
         while(correctInput):
             try:
+                runNumber = int(input("How many times would you like to run this? :: "))
+                if(runNumber > 0):
+                    correctInput = False
+                else:
+                    print("You did not enter a positive natural number, try again!")
+            except ValueError:
+                print("You did not enter a number, try again!")
+        correctInput = True
+        while(correctInput):
+            try:
                 rows = int(input("How many rows/columns for your matrix? :: "))
                 if(rows > 0):
                     correctInput = False
@@ -385,13 +412,14 @@ def main(): #creates a matrix for inverse()
                     print("You did not enter a positive natural number, try again!")
             except ValueError:
                 print("You did not enter a number, try again!")
-        matrix = []
-        for x in range(rows):
-            row = []
-            for y in range(rows):
-                row.append(abs(round(random.random()*2-random.random()*10,0)))
-            matrix.append(row)
-        inverse(matrix)
+        for iteration in range(runNumber):
+            matrix = []
+            for x in range(rows):
+                row = []
+                for y in range(rows):
+                    row.append(abs(round(random.random()*2-random.random()*10,0)))
+                matrix.append(row)
+            inverse(matrix)
     elif(response == "3"):
         pass
     else:
