@@ -149,9 +149,9 @@ def lowerT(a,identity): #returns [a,identity] updated
                         print("Error in lowerT() for (",rows,",",columns,"), a looks like:\n")
                         printMatrix(a)
                         exit("There's a 0 above the number")
-                multiplier = (-1.0 * a[rows][columns])/a[rows+1][columns]
-                a[rows] = add(multiply(multiplier,a[rows+1]) , a[rows])
-                identity[rows] = add(multiply(multiplier,identity[rows+1]) , identity[rows])
+                multiplier = (-1.0 * a[rows][columns])/a[rows+below][columns]
+                a[rows] = add(multiply(multiplier,a[rows+below]) , a[rows])
+                identity[rows] = add(multiply(multiplier,identity[rows+below]) , identity[rows])
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
