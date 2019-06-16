@@ -212,7 +212,7 @@ def switch(a,identity):
     for y in range(len(a)-1,-1,-1):
         canBePlaced = []
         for x in range(len(array)):
-            if(y in array[x][1] and len(array[x] < 3)):
+            if(y in array[x][1] and len(array[x]) < 3):
                 canBePlaced.append(x)
         if(len(canBePlaced) == 0):
             exit("Error in Switch(): Matrix is un-invertible by me")
@@ -224,7 +224,7 @@ def switch(a,identity):
                 if(len(array[x][1]) < len(array[smallest][1])):
                     smallest = canBePlaced[x]
             array[smallest].append(y)
-    newMatrixA = [] #5
+    newMatrixA = []
     newMatrixIdentity = []
     for x in range(len(array)):
         for y in range(len(array)):
@@ -232,18 +232,16 @@ def switch(a,identity):
                 newMatrixA.append(a[y])
                 newMatrixIdentity.append(identity[y])
                 break
-    a = newMatrixA #8
-    identity = newMatrixIdentity 
+    a = newMatrixA.copy()
+    identity = newMatrixIdentity.copy()
+    del newMatrixA
+    del newMatrixIdentity
     """checks for any 0s in diagonal"""
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
             if(row_index == column_index and a[row_index][column_index] == 0):
                 printAugmentedMatrix(a,identity)
-                exit("Error in switch(): There's a 0 in a diagonal in row "+ str(row_index))
-            else:
-                exit("Error in switch(): This statement is impossible to occur.")
-    
-    #6
+                exit("Error in switch(): There's a 0 in a diagonal in row "+ str(row_index))    
     a = formatZeros(a)
     identity = formatZeros(identity)
     return[a,identity]
@@ -356,7 +354,7 @@ def main():
         for x in range(rows):
             row = []
             for y in range(rows):
-                row.append(abs(round(random.random()*2-random.random()*2,0)))
+                row.append(abs(round(random.random()*2-random.random()*10,0)))
             matrix.append(row)
         inverse(matrix)
     elif(response == "3"):
