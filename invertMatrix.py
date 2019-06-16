@@ -159,7 +159,7 @@ def lowerT(a,identity): #returns [a,identity] updated
 def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
     """Plan:
         1. Create identity matrix
-        2. Multiply a_inverse by A
+        2. Multiply A_inverse by A
         3. Check if the result is identity
     """
     #1 Create identity matrix
