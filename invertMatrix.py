@@ -183,31 +183,8 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
         print("Matrix inversion failed")
 def switch(a,identity):
     """Plan: As long as diag isn't 0, we're fine
-        1. If an entire row is 0:
-            un-invertible
-        2. Create a blank array[]
-        3. For each row in 'a', create a vector[]
-            For each element in the row, append its index in array if it aint 0
-            Add the vector[] into array[]
-        4. Create another blank array2[]
-            For each vector[] in array[], add its number of 0s like so:
-                [ [3,[1,2]] , [1,[0,1,3,4]] , [0,[0,1,2,3,4]] , [2,[1,2,3]] , [3,[0,1]] ]
-            array2[0] = [3,[1,2]]   = row information
-            array2[0][0] = 3        = # of 0s in row
-            array2[0][1] = [1,2]    = row indices it can be placed in
-        5. Create a new matrix for 'a' and identity
-        6. Starting from the bottom to up:
-            array2[0] = [ 3 ,[1,2] ]
-            add an index for each row of where they'll be in the new matrix
-                select the row by:
-                    1. They must include the row-index in their array2
-                    2. Out of those, select the one with the most 0s
-                    3. If there are 2 candidates, select the one with smaller len()
-                    4. If there is none to input, un-invertible
-        7. Put them in newMatrix in correct order
-        8. copy newMatrix into a and identity
     """
-    for x in range(len(a)): #1 If an entire row is 0: un-invertible
+    for x in range(len(a)): #If an entire row is 0: un-invertible
         allZeros = True
         for y in range(len(a)):
             if(a[x][y] != 0.0):
@@ -215,8 +192,8 @@ def switch(a,identity):
                 break
         if(allZeros):
             exit("Error in switch(): Row ",x," is all 0s")
-    array = [] #2
-    for x in range(len(a)): #3
+    array = []
+    for x in range(len(a)): #array = [[],[],[]]
         vector = []
         for y in range(len(a)):
             if(a[x][y] != 0):
@@ -225,19 +202,32 @@ def switch(a,identity):
     array2 = [] #4
     for vector in array:
         zeroes = 0
-        for y in vector:
-            if(y == 0):
+        for x in range(len(a)):
+            if(not x in vector):
                 zeroes += 1
         array2.append([zeroes,vector])
+    array = array2.copy()
+    del array2
+    #array = [ [ x,[] ] , [ x,[] ] , [ x,[] ] ]
+    for y in range(len(a)-1,-1,-1):
+        canBePlaced = []
+        for x in range(len(array)):
+            if(y in array[x][1] and len(array[x] < 3)):
+                canBePlaced.append(x)
+        if(len(canBePlaced) == 0):
+            exit("Error in Switch(): Matrix is un-invertible by me")
+        elif(len(canBePlaced) == 1):
+            array[canBePlaced[0]].append(y)
+        else:
+            smallest = canBePlaced[0]
+            for x in range(1,len(canBePlaced)):
+                if(len(array[x][1]) < len(array[smallest][1])):
+                    smallest = canBePlaced[x]
+            array[smallest].append(y)
+    
     newMatrixA = [] #5
     newMatrixIdentity = []
-    for row_index in range(len(a)-1,-1): #6
-        listOfGoodRows = []
-        for x in array2:
-            if(row_index in x[1]):
-                listOfGoodRows.append(x)
-        
-    
+
     a = newMatrixA #8
     identity = newMatrixIdentity 
     """checks for any 0s in diagonal"""
