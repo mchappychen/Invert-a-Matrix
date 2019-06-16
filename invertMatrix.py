@@ -229,7 +229,8 @@ def switch(a,identity): #repositions 0s so that it isn't on diagonal
                 allZeros = False
                 break
         if(allZeros):
-            exit("Error in switch(): Row ",x," is all 0s")
+            print("Error in switch(): Row ",x," is all 0s")
+            return None
     array = [] #2 Create a new array[]
     for x in range(len(a)): #3 Place vector[]s in array = [[],[],[]]
         vector = []
