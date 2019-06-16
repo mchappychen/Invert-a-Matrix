@@ -71,10 +71,10 @@ def formatZeros(a): #turns -0.0 into 0.0
 
 def upperT(a,identity): #returns [a,identity] updated
     """Plan:
-        xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
-        xxxx  > xxxx  > xxxx  > 0xxx  > 0xxx  > 0xxx
-        xxxx    0xxx    0xxx    0xxx    00xx    00xx
-        0xxx    0xxx    00xx    00xx    00xx    000x
+        x x x x     x x x x     x x x x     x x x x     x x x x     x x x x
+        x x x x --> x x x x --> 0 x x x --> 0 x x x --> 0 x x x --> 0 x x x
+        x x x x     0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x 
+        0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x     0 0 0 x
         
         loop from bottom-to-up:
             if it's not 0:
@@ -103,10 +103,10 @@ def upperT(a,identity): #returns [a,identity] updated
 
 def diag(a,identity): #turns diagonal into 1
     """Plan:        
-        1xxx    1xxx    1xxx    1xxx
-        0xxx  > 01xx  > 01xx  > 01xx
-        00xx    00xx    001x    001x
-        000x    000x    000x    0001
+        1 x x x     1 x x x     1 x x x     1 x x x 
+        0 x x x --> 0 1 x x --> 0 1 x x --> 0 1 x x
+        0 0 x x     0 0 x x     0 0 1 x     0 0 1 x
+        0 0 0 x     0 0 0 x     0 0 0 x     0 0 0 1
         
         loop diagonally:
             if current is not 1:
@@ -126,10 +126,10 @@ def diag(a,identity): #turns diagonal into 1
 
 def lowerT(a,identity): #returns [a,identity] updated
     """Plan:
-        1xx0    1xx0    1x00    1x00    1x00    1000
-        01xx  > 01x0  > 01x0  > 01x0  > 0100  > 0100
-        001x    001x    001x    0010    0010    0010
-        0001    0001    0001    0001    0001    0001
+        1 x x 0     1 x x 0     1 x x 0     1 x 0 0     1 x 0 0     1 0 0 0
+        0 1 x x --> 0 1 x 0 --> 0 1 x 0 --> 0 1 x 0 --> 0 1 0 0 --> 0 1 0 0
+        0 0 1 x     0 0 1 x     0 0 1 0     0 0 1 0     0 0 1 0     0 0 1 0 
+        0 0 0 1     0 0 0 1     0 0 0 1     0 0 0 1     0 0 0 1     0 0 0 1
 
         loop from top-to-down:
             if it's not 0:
