@@ -368,11 +368,14 @@ def main(): #creates a matrix for inverse()
     else:
         debug = False
     print("Debug turned to ",debug)
-    response = input("Enter \'1\' for manual input, or \'2\' for auto-generated input, or \'3\' to exit :: ")
-    if(not response in ("1","2","3")):
-        print("Only enter 1, 2 or 3")
-        main()
-    elif(response == "1"):
+    correctResponse = False
+    while(not correctResponse):
+        response = input("Enter \'1\' for manual input, or \'2\' for auto-generated input, or \'3\' to exit :: ")
+        if(not response in ("1","2","3")):
+            print("Only enter 1, 2 or 3")
+        else:
+            correctResponse = True
+    if(response == "1"):
         correctInput = True
         while(correctInput):
             try:
