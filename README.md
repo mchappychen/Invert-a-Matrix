@@ -22,18 +22,21 @@ This is how my algorithm works for a 4x4 matrix, where x is a random number:
 
         
         1. UpperT():
+        
         x x x x     x x x x     x x x x     x x x x     x x x x     x x x x
         x x x x --> x x x x --> 0 x x x --> 0 x x x --> 0 x x x --> 0 x x x
         x x x x     0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x 
         0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x     0 0 0 x
         
         2. Diag():
+        
         1 x x x     1 x x x     1 x x x     1 x x x 
         0 x x x --> 0 1 x x --> 0 1 x x --> 0 1 x x
         0 0 x x     0 0 x x     0 0 1 x     0 0 1 x
         0 0 0 x     0 0 0 x     0 0 0 x     0 0 0 1
         
         3. LowerT():
+        
         1 x x 0     1 x x 0     1 x x 0     1 x 0 0     1 x 0 0     1 0 0 0
         0 1 x x --> 0 1 x 0 --> 0 1 x 0 --> 0 1 x 0 --> 0 1 0 0 --> 0 1 0 0
         0 0 1 x     0 0 1 x     0 0 1 0     0 0 1 0     0 0 1 0     0 0 1 0 
