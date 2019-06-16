@@ -403,7 +403,7 @@ def main(): #creates a matrix for inverse()
         correctInput = True
         while(correctInput):
             try:
-                runNumber = int(input("How many times would you like to run this? :: "))
+                runNumber = int(input("How many trials would you like to run this? :: "))
                 if(runNumber > 0):
                     correctInput = False
                 else:
