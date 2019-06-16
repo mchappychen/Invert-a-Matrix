@@ -1,6 +1,7 @@
 from sys import exit
 import random
-def matrixMult(a,b): #returns [a[]xb[]]
+
+def matrixMult(a,b): #returns [] of a[] x b[]
     result = []
     for i in range(len(a)):
         array = []
@@ -11,21 +12,24 @@ def matrixMult(a,b): #returns [a[]xb[]]
             array.append(element)
         result.append(array)
     return result
-def multiply(a,b): #returns: [a x b[]]
+
+def multiply(a,b): #returns: [] of a x b[]
     if(a == 0):
         exit("Error in multiply(): You can't multiply matrix by 0")
     result = []
     for element in b:
         result.append(element * a)
     return result
-def add(a,b): #returns [a[]+b[]]
+
+def add(a,b): #returns [] of a[]+b[]
     result = []
     if(len(a) != len(b)):
         exit("Error in add(a,b): length of a[] not equal to length of b[]")
     for i in range(len(a)):
         result.append(a[i]+b[i])
     return result
-def printMatrix(a): #prints a[[]]
+
+def printMatrix(a): #prints a matrix
     for x in a:
         string = "|\t"
         for y in x:
@@ -33,7 +37,8 @@ def printMatrix(a): #prints a[[]]
         string += "|"
         print(string)
     print("")
-def printAugmentedMatrix(a,b): #prings a[[]] | b[[]]
+
+def printAugmentedMatrix(a,b): #prints a[]|b[]
     for x in range(len(a)):
         string = "|\t"
         for y in range(len(a[0])):
@@ -44,7 +49,8 @@ def printAugmentedMatrix(a,b): #prings a[[]] | b[[]]
         string += "|"
         print(string)
     print("")
-def checkErrors(a): #Makes sure input is correct format
+    
+def checkErrors(a): #Makes sure inverse() input is correct format
     try:
         t = a[0][0]
         del t
@@ -56,11 +62,13 @@ def checkErrors(a): #Makes sure input is correct format
         for y in x:
             if(y == None):
                 exit("Error in inverse(a): Matrix is missing values")
+                
 def formatZeros(a): #turns -0.0 into 0.0
     for x in range(len(a)):
         for y in range(len(a)):
             a[x][y] += 0
     return a
+
 def upperT(a,identity): #returns [a,identity] updated
     """Plan:
         xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
@@ -68,12 +76,13 @@ def upperT(a,identity): #returns [a,identity] updated
         xxxx    0xxx    0xxx    0xxx    00xx    00xx
         0xxx    0xxx    00xx    00xx    00xx    000x
         
-        if it's not 0:
-            while(above is 0):
-                above := above again
-                if above out of index:
-                    throw error
-            row := row + (-1 * current/above) * (above_row)
+        loop from bottom-to-up:
+            if it's not 0:
+                while(above is 0):
+                    above := above again
+                    if above out of index:
+                        throw error
+                row := row + (-1 * current/above) * (above_row)
     """
     for columns in range(len(a)-1):
         for rows in range(len(a)-1,columns,-1):
@@ -91,6 +100,7 @@ def upperT(a,identity): #returns [a,identity] updated
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
+
 def diag(a,identity): #turns diagonal into 1
     """Plan:        
         1xxx    1xxx    1xxx    1xxx
@@ -98,8 +108,9 @@ def diag(a,identity): #turns diagonal into 1
         00xx    00xx    001x    001x
         000x    000x    000x    0001
         
-        row := (1/current) * row
-        if current = 1, do nothing
+        loop diagonally:
+            if current is not 1:
+                row := (1/current) * row
     """
     for row_index in range(len(a)):
         for column_index in range(len(a[0])):
@@ -112,6 +123,7 @@ def diag(a,identity): #turns diagonal into 1
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
+
 def lowerT(a,identity): #returns [a,identity] updated
     """Plan:
         1xx0    1xx0    1x00    1x00    1x00    1000
@@ -119,12 +131,13 @@ def lowerT(a,identity): #returns [a,identity] updated
         001x    001x    001x    0010    0010    0010
         0001    0001    0001    0001    0001    0001
 
-        if it's not 0:
-            while(above is 0):
-                below := below again
-                if below out of index
-                    throw error
-            row := row - (current/below) * (below_row)
+        loop from top-to-down:
+            if it's not 0:
+                while(below is 0):
+                    below := below again
+                    if below out of index
+                        throw error
+                row := row + (-1 * (current/below)) * (below_row)
     """
     for columns in range(len(a)-1,0,-1):  
         for rows in range(0,columns,1):
@@ -142,13 +155,14 @@ def lowerT(a,identity): #returns [a,identity] updated
     a = formatZeros(a)
     identity = formatZeros(identity)
     return [a,identity]
-def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
-    """ A_inverse = identity, A = temp
+
+def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
+    """Plan:
         1. Create identity matrix
         2. Multiply a_inverse by A
         3. Check if the result is identity
     """
-    #1
+    #1 Create identity matrix
     identity = []
     for x in range(len(A_inverse)):
         row = []
@@ -159,10 +173,10 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
                 row.append(0.0)
         identity.append(row)
                 
-    #2
+    #2 Multiply A_inverse by A
     A_inverse = matrixMult(A_inverse,A)
     
-    #3
+    #3 Check if the result is identity
     A_inverse = formatZeros(A_inverse)
     print("A-1 x A becomes:\n")
     printMatrix(A_inverse)
@@ -181,10 +195,31 @@ def checkInverseMatrix(A_inverse,A): #checks if A-1 x A = I
         print("Successfully inverted matrix")
     else:
         print("Matrix inversion failed")
-def switch(a,identity):
-    """Plan: As long as diag isn't 0, we're fine
+
+def switch(a,identity): #repositions 0s so that it isn't on diagonal
+    """Plan:
+        1. If an entire row is 0:
+            throw an error, it's un-invertible
+        2. Create a new array[] 
+        3. For each row:
+            Make another array, called a vector[]
+            In the vector, put the indices of where the row can be switched to
+            Append the vectors into array[]
+        3. For each vector[] in array[]:
+            Change vector from this: [a,b,c] --> [x,[a,b,c]]
+                where x is the number of 0s in that (corresponding) row
+        4. For each vector[] in array[]:
+            Change vector from this: [x,[a,b,c]] --> [x,[a,b,c],m]
+                where m is the position of where the array will be switched
+                    find m by:
+                        1. creating a canBePlaced[] of the rows that the row can be switched into
+                        2. If it's empty, it's un-invertible, throw an error
+                        3. If it only has one item, that is m
+                        4. If it has more than one item, choose the item with the smallest length
+        5. Swap all the rows accordingly into another matrix, then set that matrix to a/identity
+        6. Check if there's any 0s in the diagonal, if there is, throw an error
     """
-    for x in range(len(a)): #If an entire row is 0: un-invertible
+    for x in range(len(a)): #1 If an entire row is 0: un-invertible
         allZeros = True
         for y in range(len(a)):
             if(a[x][y] != 0.0):
@@ -192,14 +227,14 @@ def switch(a,identity):
                 break
         if(allZeros):
             exit("Error in switch(): Row ",x," is all 0s")
-    array = []
-    for x in range(len(a)): #array = [[],[],[]]
+    array = [] #2 Create a new array[]
+    for x in range(len(a)): #3 Place vector[]s in array = [[],[],[]]
         vector = []
         for y in range(len(a)):
             if(a[x][y] != 0):
                 vector.append(y)
         array.append(vector)
-    array2 = [] #4
+    array2 = [] #3 For each vector[] in array[], [a,b,c] --> [x,[a,b,c]]
     for vector in array:
         zeroes = 0
         for x in range(len(a)):
@@ -208,8 +243,7 @@ def switch(a,identity):
         array2.append([zeroes,vector])
     array = array2.copy()
     del array2
-    #array = [ [ x,[] ] , [ x,[] ] , [ x,[] ] ]
-    for y in range(len(a)-1,-1,-1):
+    for y in range(len(a)-1,-1,-1): #4 [x,[a,b,c]] --> [x,[a,b,c],m]
         canBePlaced = []
         for x in range(len(array)):
             if(y in array[x][1] and len(array[x]) < 3):
@@ -224,7 +258,7 @@ def switch(a,identity):
                 if(len(array[x][1]) < len(array[smallest][1])):
                     smallest = canBePlaced[x]
             array[smallest].append(y)
-    newMatrixA = []
+    newMatrixA = [] #5 Swap all the rows into a new matrix
     newMatrixIdentity = []
     for x in range(len(array)):
         for y in range(len(array)):
@@ -236,8 +270,7 @@ def switch(a,identity):
     identity = newMatrixIdentity.copy()
     del newMatrixA
     del newMatrixIdentity
-    """checks for any 0s in diagonal"""
-    for row_index in range(len(a)):
+    for row_index in range(len(a)): #6 checks for any 0s in diagonal
         for column_index in range(len(a[0])):
             if(row_index == column_index and a[row_index][column_index] == 0):
                 printAugmentedMatrix(a,identity)
@@ -245,7 +278,8 @@ def switch(a,identity):
     a = formatZeros(a)
     identity = formatZeros(identity)
     return[a,identity]
-def inverse(a):
+    
+def inverse(a): #inverts a matrix
     #Copy a into temp without making a reference
     temp = []
     for x in a:
@@ -310,7 +344,8 @@ def inverse(a):
     checkInverseMatrix(identity,temp)
     identity = formatZeros(identity)
     return identity
-def main():
+
+def main(): #creates a matrix for inverse()
     response = input("Enter \'1\' for manual input, or \'2\' for auto-generated input, or \'3\' to exit :: ")
     if(not response in ("1","2","3")):
         print("Only enter 1, 2 or 3")
@@ -361,5 +396,6 @@ def main():
         pass
     else:
         exit("Error in main(): This is unreachable code")
-if __name__ == "__main__":
+
+if __name__ == "__main__": #calls main() when program starts
     main()
