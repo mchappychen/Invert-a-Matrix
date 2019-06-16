@@ -340,7 +340,7 @@ def inverse(a): #inverts a matrix
     print("\nAfter lowerT(), augmented matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
-    #Step 5: Check A-1 x I = A
+    #Step 5: Check A-1 x A = I
     checkInverseMatrix(identity,temp)
     identity = formatZeros(identity)
     return identity
