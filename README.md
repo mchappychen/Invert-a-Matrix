@@ -22,10 +22,10 @@ This is how my algorithm works for a 4x4 matrix, where x is a random number:
 
         
         1. UpperT():
-        xxxx    xxxx    xxxx    xxxx    xxxx    xxxx
-        xxxx  > xxxx  > 0xxx  > 0xxx  > 0xxx  > 0xxx
-        xxxx    0xxx    0xxx    0xxx    00xx    00xx
-        0xxx    0xxx    0xxx    00xx    00xx    000x
+        x x x x     x x x x     x x x x     x x x x     x x x x     x x x x
+        x x x x --> x x x x --> 0 x x x --> 0 x x x --> 0 x x x --> 0 x x x
+        x x x x     0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x 
+        0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x     0 0 0 x
         
         2. Diag():
         1xxx    1xxx    1xxx    1xxx
