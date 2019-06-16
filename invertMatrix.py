@@ -224,10 +224,14 @@ def switch(a,identity):
                 if(len(array[x][1]) < len(array[smallest][1])):
                     smallest = canBePlaced[x]
             array[smallest].append(y)
-    
     newMatrixA = [] #5
     newMatrixIdentity = []
-
+    for x in range(len(array)):
+        for y in range(len(array)):
+            if(array[y][2] == x):
+                newMatrixA.append(a[y])
+                newMatrixIdentity.append(identity[y])
+                break
     a = newMatrixA #8
     identity = newMatrixIdentity 
     """checks for any 0s in diagonal"""
