@@ -160,7 +160,7 @@ def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
     """Plan:
         1. Create identity matrix
         2. Multiply A_inverse by A
-        3. Check if the result is identity
+        3. Check if the result is equivalent to identity matrix
     """
     #1 Create identity matrix
     identity = []
@@ -176,7 +176,7 @@ def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
     #2 Multiply A_inverse by A
     A_inverse = matrixMult(A_inverse,A)
     
-    #3 Check if the result is identity
+    #3 Check if the result is equal to identity
     A_inverse = formatZeros(A_inverse)
     print("A-1 x A becomes:\n")
     printMatrix(A_inverse)
