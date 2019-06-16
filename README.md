@@ -28,10 +28,10 @@ This is how my algorithm works for a 4x4 matrix, where x is a random number:
         0 x x x     0 x x x     0 x x x     0 0 x x     0 0 x x     0 0 0 x
         
         2. Diag():
-        1xxx    1xxx    1xxx    1xxx
-        0xxx  > 01xx  > 01xx  > 01xx
-        00xx    00xx    001x    001x
-        000x    000x    000x    0001
+        1 x x x     1 x x x     1 x x x     1 x x x 
+        0 x x x --> 0 1 x x --> 0 1 x x --> 0 1 x x
+        0 0 x x     0 0 x x     0 0 1 x     0 0 1 x
+        0 0 0 x     0 0 0 x     0 0 0 x     0 0 0 1
         
         3. LowerT():
         1xx0    1xx0    1xx0    1x00    1x00    1000
