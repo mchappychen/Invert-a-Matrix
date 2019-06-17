@@ -2,6 +2,7 @@ from sys import exit
 import random
 
 debug = False
+secretDebug = True
 
 def matrixMult(a,b): #returns [] of a[] x b[]
     result = []
@@ -197,7 +198,8 @@ def checkInverseMatrix(A_inverse,A): #checks if A-inverse x A = Identity
                     print("A-1 x A Error: (",x,",",y,") is",round(A_inverse[x][y],2),"but should be 0")
                     success = False
     if(success):
-        print("Successfully inverted matrix\n")
+        if(debug):
+            print("Successfully inverted matrix\n")
     else:
         print("Matrix inversion failed")
 
@@ -309,7 +311,8 @@ def inverse(a): #inverts a matrix
         identity.append(element)
 
     #Step 3: Print augmented matrix
-    print("\nAugmented Matrix looks like:\n")
+    if(secretDebug):
+        print("\nAugmented Matrix looks like:\n")
     printAugmentedMatrix(a,identity)
     
     """Master Plan:
@@ -353,7 +356,8 @@ def inverse(a): #inverts a matrix
     identity = augment[1]
     if(debug):
         print("\nAfter lowerT(), augmented matrix looks like:\n")
-    printAugmentedMatrix(a,identity)
+    if(secretDebug):
+        printAugmentedMatrix(a,identity)
     
     #Step 5: Check A-1 x A = I
     checkInverseMatrix(identity,temp)
@@ -362,6 +366,7 @@ def inverse(a): #inverts a matrix
 
 def main(): #creates a matrix for inverse()
     global debug
+    global superdebug
     response = input("Would you like to enable debug? Type ('yes' or 'y') :: ")
     if(("y" == response ) or ("yes" == response)):
         debug = True
