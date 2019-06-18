@@ -42,5 +42,4 @@ This is how my algorithm works for a 4x4 matrix, where x is a random number:
         0 0 1 x     0 0 1 x     0 0 1 0     0 0 1 0     0 0 1 0     0 0 1 0 
         0 0 0 1     0 0 0 1     0 0 0 1     0 0 0 1     0 0 0 1     0 0 0 1
         
-        
-(hsdafsadf)[https://testflight.apple.com/join/TVKLsdeN]
+       
